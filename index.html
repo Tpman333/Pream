@@ -1483,6 +1483,18 @@
             </div>
         </div>
 
+        <!-- FREQUENCY WORDS VIEW -->
+        <div id="view-words" class="hidden">
+            <div class="header-bar">
+                <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem">⬅️</button>
+                <h2>Common Words / คำเจอบ่อย</h2>
+                <div style="width:30px"></div>
+            </div>
+            <div id="words-container" style="padding:20px; padding-bottom:100px;">
+                <!-- Words will be rendered here -->
+            </div>
+        </div>
+
         <!-- SENTENCE PATTERN VIEW -->
         <div id="view-patterns" class="hidden">
             <div class="header-bar">
@@ -1585,6 +1597,10 @@
             <span>🎓</span>
             Quiz
         </button>
+        <button class="nav-item" onclick="setTab('words')" id="nav-words">
+            <span>🔤</span>
+            Words
+        </button>
         <button class="nav-item" onclick="toggleSettings()" id="nav-settings">
             <span>⚙️</span>
             Settings
@@ -1592,6 +1608,984 @@
     </nav>
 
     <script>
+        // --- COMMON WORDS DATA: BATCH 1 (Words 1-250) ---
+        const commonWordsData_Batch1 = [
+            {
+                category: "Pronouns & People / บุคคลและสรรพนาม",
+                icon: "👥",
+                words: [
+                    { ch: "我", py: "wǒ", en: "I / me", th: "ฉัน/ผม", pos: "pron" },
+                    { ch: "你", py: "nǐ", en: "you", th: "คุณ/เธอ", pos: "pron" },
+                    { ch: "您", py: "nín", en: "you (polite)", th: "ท่าน", pos: "pron" },
+                    { ch: "他", py: "tā", en: "he / him", th: "เขา (ผู้ชาย)", pos: "pron" },
+                    { ch: "她", py: "tā", en: "she / her", th: "เธอ (ผู้หญิง)", pos: "pron" },
+                    { ch: "我们", py: "wǒmen", en: "we / us", th: "พวกเรา", pos: "pron" },
+                    { ch: "你们", py: "nǐmen", en: "you (plural)", th: "พวกคุณ", pos: "pron" },
+                    { ch: "他们", py: "tāmen", en: "they / them", th: "พวกเขา", pos: "pron" },
+                    { ch: "她们", py: "tāmen", en: "they (female)", th: "พวกเธอ", pos: "pron" },
+                    { ch: "大家", py: "dàjiā", en: "everyone", th: "ทุกคน", pos: "pron" },
+                    { ch: "自己", py: "zìjǐ", en: "oneself", th: "ตัวเอง", pos: "pron" },
+                    { ch: "朋友", py: "péngyou", en: "friend", th: "เพื่อน", pos: "noun" },
+                    { ch: "家人", py: "jiārén", en: "family member", th: "คนในครอบครัว", pos: "noun" },
+                    { ch: "爸爸", py: "bàba", en: "dad", th: "พ่อ", pos: "noun" },
+                    { ch: "妈妈", py: "māma", en: "mom", th: "แม่", pos: "noun" },
+                    { ch: "哥哥", py: "gēge", en: "older brother", th: "พี่ชาย", pos: "noun" },
+                    { ch: "姐姐", py: "jiějie", en: "older sister", th: "พี่สาว", pos: "noun" },
+                    { ch: "弟弟", py: "dìdi", en: "younger brother", th: "น้องชาย", pos: "noun" },
+                    { ch: "妹妹", py: "mèimei", en: "younger sister", th: "น้องสาว", pos: "noun" },
+                    { ch: "爷爷", py: "yéye", en: "grandfather (paternal)", th: "ปู่", pos: "noun" },
+                    { ch: "奶奶", py: "nǎinai", en: "grandmother (paternal)", th: "ย่า", pos: "noun" },
+                    { ch: "老师", py: "lǎoshī", en: "teacher", th: "ครู/อาจารย์", pos: "noun" },
+                    { ch: "学生", py: "xuésheng", en: "student", th: "นักเรียน", pos: "noun" },
+                    { ch: "同学", py: "tóngxué", en: "classmate", th: "เพื่อนร่วมชั้น", pos: "noun" },
+                    { ch: "医生", py: "yīshēng", en: "doctor", th: "หมอ", pos: "noun" },
+                    { ch: "先生", py: "xiānsheng", en: "Mr. / sir", th: "คุณผู้ชาย", pos: "noun" },
+                    { ch: "小姐", py: "xiǎojiě", en: "Miss", th: "คุณผู้หญิง", pos: "noun" },
+                    { ch: "丈夫", py: "zhàngfu", en: "husband", th: "สามี", pos: "noun" },
+                    { ch: "妻子", py: "qīzi", en: "wife", th: "ภรรยา", pos: "noun" },
+                    { ch: "孩子", py: "háizi", en: "child", th: "เด็ก/ลูก", pos: "noun" }
+                ]
+            },
+            {
+                category: "Essential Verbs / คำกริยาพื้นฐาน",
+                icon: "🏃",
+                words: [
+                    { ch: "是", py: "shì", en: "to be", th: "เป็น/คือ/ใช่", pos: "verb" },
+                    { ch: "有", py: "yǒu", en: "to have", th: "มี", pos: "verb" },
+                    { ch: "在", py: "zài", en: "to be at/in", th: "อยู่ที่", pos: "verb" },
+                    { ch: "去", py: "qù", en: "to go", th: "ไป", pos: "verb" },
+                    { ch: "来", py: "lái", en: "to come", th: "มา", pos: "verb" },
+                    { ch: "做", py: "zuò", en: "to do / make", th: "ทำ", pos: "verb" },
+                    { ch: "看", py: "kàn", en: "to look / watch / read", th: "ดู/มอง/อ่าน", pos: "verb" },
+                    { ch: "吃", py: "chī", en: "to eat", th: "กิน", pos: "verb" },
+                    { ch: "喝", py: "hē", en: "to drink", th: "ดื่ม", pos: "verb" },
+                    { ch: "听", py: "tīng", en: "to listen", th: "ฟัง", pos: "verb" },
+                    { ch: "说", py: "shuō", en: "to speak", th: "พูด", pos: "verb" },
+                    { ch: "读", py: "dú", en: "to read aloud", th: "อ่าน(ออกเสียง)", pos: "verb" },
+                    { ch: "写", py: "xiě", en: "to write", th: "เขียน", pos: "verb" },
+                    { ch: "想", py: "xiǎng", en: "to want / think / miss", th: "อยาก/คิด/คิดถึง", pos: "verb" },
+                    { ch: "要", py: "yào", en: "to want / need / will", th: "จะ/ต้องการ", pos: "verb" },
+                    { ch: "喜欢", py: "xǐhuan", en: "to like", th: "ชอบ", pos: "verb" },
+                    { ch: "爱", py: "ài", en: "to love", th: "รัก", pos: "verb" },
+                    { ch: "买", py: "mǎi", en: "to buy", th: "ซื้อ", pos: "verb" },
+                    { ch: "卖", py: "mài", en: "to sell", th: "ขาย", pos: "verb" },
+                    { ch: "叫", py: "jiào", en: "to be called / to call", th: "ชื่อว่า/เรียก", pos: "verb" },
+                    { ch: "认识", py: "rènshi", en: "to know (a person)", th: "รู้จัก", pos: "verb" },
+                    { ch: "知道", py: "zhīdào", en: "to know (a fact)", th: "รู้", pos: "verb" },
+                    { ch: "觉得", py: "juéde", en: "to feel / think", th: "รู้สึก/คิดว่า", pos: "verb" },
+                    { ch: "会", py: "huì", en: "can (skill) / will", th: "เป็น/สามารถ/จะ", pos: "verb" },
+                    { ch: "能", py: "néng", en: "can (ability)", th: "ได้ (ความสามารถ)", pos: "verb" },
+                    { ch: "可以", py: "kěyǐ", en: "can (permission)", th: "ได้ (อนุญาต)", pos: "verb" },
+                    { ch: "学习", py: "xuéxí", en: "to study", th: "เรียน", pos: "verb" },
+                    { ch: "工作", py: "gōngzuò", en: "to work", th: "ทำงาน", pos: "verb" },
+                    { ch: "休息", py: "xiūxi", en: "to rest", th: "พักผ่อน", pos: "verb" },
+                    { ch: "睡觉", py: "shuìjiào", en: "to sleep", th: "นอนหลับ", pos: "verb" },
+                    { ch: "起床", py: "qǐchuáng", en: "to get up", th: "ตื่นนอน", pos: "verb" },
+                    { ch: "给", py: "gěi", en: "to give", th: "ให้", pos: "verb" },
+                    { ch: "找", py: "zhǎo", en: "to look for", th: "หา", pos: "verb" },
+                    { ch: "等", py: "děng", en: "to wait", th: "รอ", pos: "verb" },
+                    { ch: "穿", py: "chuān", en: "to wear", th: "ใส่/สวม", pos: "verb" },
+                    { ch: "洗", py: "xǐ", en: "to wash", th: "ซัก/ล้าง", pos: "verb" },
+                    { ch: "玩", py: "wán", en: "to play", th: "เล่น", pos: "verb" },
+                    { ch: "帮助", py: "bāngzhù", en: "to help", th: "ช่วยเหลือ", pos: "verb" },
+                    { ch: "准备", py: "zhǔnbèi", en: "to prepare", th: "เตรียม", pos: "verb" },
+                    { ch: "开始", py: "kāishǐ", en: "to start", th: "เริ่ม", pos: "verb" },
+                    { ch: "介绍", py: "jièshào", en: "to introduce", th: "แนะนำ", pos: "verb" },
+                    { ch: "问", py: "wèn", en: "to ask", th: "ถาม", pos: "verb" },
+                    { ch: "走", py: "zǒu", en: "to walk / leave", th: "เดิน/ไป", pos: "verb" },
+                    { ch: "跑", py: "pǎo", en: "to run", th: "วิ่ง", pos: "verb" },
+                    { ch: "坐", py: "zuò", en: "to sit", th: "นั่ง", pos: "verb" },
+                    { ch: "站", py: "zhàn", en: "to stand", th: "ยืน", pos: "verb" },
+                    { ch: "懂", py: "dǒng", en: "to understand", th: "เข้าใจ", pos: "verb" },
+                    { ch: "笑", py: "xiào", en: "to laugh / smile", th: "หัวเราะ/ยิ้ม", pos: "verb" },
+                    { ch: "哭", py: "kū", en: "to cry", th: "ร้องไห้", pos: "verb" },
+                    { ch: "借", py: "jiè", en: "to borrow / lend", th: "ยืม/ให้ยืม", pos: "verb" }
+                ]
+            },
+            {
+                category: "Adjectives & Descriptions / คำคุณศัพท์",
+                icon: "✨",
+                words: [
+                    { ch: "好", py: "hǎo", en: "good", th: "ดี", pos: "adj" },
+                    { ch: "多", py: "duō", en: "many / much", th: "เยอะ/มาก", pos: "adj" },
+                    { ch: "少", py: "shǎo", en: "few / little", th: "น้อย", pos: "adj" },
+                    { ch: "大", py: "dà", en: "big", th: "ใหญ่", pos: "adj" },
+                    { ch: "小", py: "xiǎo", en: "small", th: "เล็ก", pos: "adj" },
+                    { ch: "长", py: "cháng", en: "long", th: "ยาว", pos: "adj" },
+                    { ch: "短", py: "duǎn", en: "short (length)", th: "สั้น", pos: "adj" },
+                    { ch: "新", py: "xīn", en: "new", th: "ใหม่", pos: "adj" },
+                    { ch: "旧", py: "jiù", en: "old (things)", th: "เก่า", pos: "adj" },
+                    { ch: "老", py: "lǎo", en: "old (people)", th: "แก่", pos: "adj" },
+                    { ch: "年轻", py: "niánqīng", en: "young", th: "หนุ่มสาว", pos: "adj" },
+                    { ch: "贵", py: "guì", en: "expensive", th: "แพง", pos: "adj" },
+                    { ch: "便宜", py: "piányi", en: "cheap", th: "ถูก", pos: "adj" },
+                    { ch: "漂亮", py: "piàoliang", en: "beautiful", th: "สวย", pos: "adj" },
+                    { ch: "丑", py: "chǒu", en: "ugly", th: "น่าเกลียด", pos: "adj" },
+                    { ch: "高兴", py: "gāoxìng", en: "glad / happy", th: "ดีใจ", pos: "adj" },
+                    { ch: "快乐", py: "kuàilè", en: "happy", th: "มีความสุข", pos: "adj" },
+                    { ch: "伤心", py: "shāngxīn", en: "sad", th: "เสียใจ", pos: "adj" },
+                    { ch: "累", py: "lèi", en: "tired", th: "เหนื่อย", pos: "adj" },
+                    { ch: "忙", py: "máng", en: "busy", th: "ยุ่ง", pos: "adj" },
+                    { ch: "饿", py: "è", en: "hungry", th: "หิว", pos: "adj" },
+                    { ch: "渴", py: "kě", en: "thirsty", th: "หิวน้ำ", pos: "adj" },
+                    { ch: "快", py: "kuài", en: "fast", th: "เร็ว", pos: "adj" },
+                    { ch: "慢", py: "màn", en: "slow", th: "ช้า", pos: "adj" },
+                    { ch: "远", py: "yuǎn", en: "far", th: "ไกล", pos: "adj" },
+                    { ch: "近", py: "jìn", en: "near", th: "ใกล้", pos: "adj" },
+                    { ch: "难", py: "nán", en: "difficult", th: "ยาก", pos: "adj" },
+                    { ch: "容易", py: "róngyì", en: "easy", th: "ง่าย", pos: "adj" },
+                    { ch: "胖", py: "pàng", en: "fat", th: "อ้วน", pos: "adj" },
+                    { ch: "瘦", py: "shòu", en: "thin", th: "ผอม", pos: "adj" },
+                    { ch: "高", py: "gāo", en: "tall / high", th: "สูง", pos: "adj" },
+                    { ch: "矮", py: "ǎi", en: "short (height)", th: "เตี้ย", pos: "adj" },
+                    { ch: "聪明", py: "cōngming", en: "smart", th: "ฉลาด", pos: "adj" },
+                    { ch: "笨", py: "bèn", en: "stupid", th: "โง่", pos: "adj" },
+                    { ch: "清楚", py: "qīngchu", en: "clear", th: "ชัดเจน", pos: "adj" },
+                    { ch: "干净", py: "gānjìng", en: "clean", th: "สะอาด", pos: "adj" },
+                    { ch: "脏", py: "zāng", en: "dirty", th: "สกปรก", pos: "adj" },
+                    { ch: "坏", py: "huài", en: "bad / broken", th: "เสีย/เลว", pos: "adj" },
+                    { ch: "冷", py: "lěng", en: "cold", th: "หนาว", pos: "adj" },
+                    { ch: "热", py: "rè", en: "hot", th: "ร้อน", pos: "adj" }
+                ]
+            },
+            {
+                category: "Time & Frequency / เวลาและความถี่",
+                icon: "⏱️",
+                words: [
+                    { ch: "现在", py: "xiànzài", en: "now", th: "ตอนนี้", pos: "noun" },
+                    { ch: "今天", py: "jīntiān", en: "today", th: "วันนี้", pos: "noun" },
+                    { ch: "明天", py: "míngtiān", en: "tomorrow", th: "พรุ่งนี้", pos: "noun" },
+                    { ch: "昨天", py: "zuótiān", en: "yesterday", th: "เมื่อวาน", pos: "noun" },
+                    { ch: "后天", py: "hòutiān", en: "day after tomorrow", th: "มะรืนนี้", pos: "noun" },
+                    { ch: "前天", py: "qiántiān", en: "day before yesterday", th: "เมื่อวานซืน", pos: "noun" },
+                    { ch: "早上", py: "zǎoshang", en: "early morning", th: "ตอนเช้า", pos: "noun" },
+                    { ch: "上午", py: "shàngwǔ", en: "morning", th: "ช่วงสาย", pos: "noun" },
+                    { ch: "中午", py: "zhōngwǔ", en: "noon", th: "เที่ยง", pos: "noun" },
+                    { ch: "下午", py: "xiàwǔ", en: "afternoon", th: "ตอนบ่าย", pos: "noun" },
+                    { ch: "晚上", py: "wǎnshang", en: "evening", th: "ตอนเย็น/กลางคืน", pos: "noun" },
+                    { ch: "每天", py: "měitiān", en: "every day", th: "ทุกวัน", pos: "noun" },
+                    { ch: "星期", py: "xīngqī", en: "week", th: "สัปดาห์", pos: "noun" },
+                    { ch: "周末", py: "zhōumò", en: "weekend", th: "สุดสัปดาห์", pos: "noun" },
+                    { ch: "月", py: "yuè", en: "month", th: "เดือน", pos: "noun" },
+                    { ch: "年", py: "nián", en: "year", th: "ปี", pos: "noun" },
+                    { ch: "小时", py: "xiǎoshí", en: "hour", th: "ชั่วโมง", pos: "noun" },
+                    { ch: "分钟", py: "fēnzhōng", en: "minute", th: "นาที", pos: "noun" },
+                    { ch: "时候", py: "shíhou", en: "time / moment", th: "ตอน/เวลา", pos: "noun" },
+                    { ch: "已经", py: "yǐjīng", en: "already", th: "แล้ว", pos: "adv" },
+                    { ch: "常常", py: "chángcháng", en: "often", th: "บ่อยๆ", pos: "adv" },
+                    { ch: "马上", py: "mǎshàng", en: "immediately", th: "เดี๋ยวนี้/ทันที", pos: "adv" },
+                    { ch: "正在", py: "zhèngzài", en: "in the process of", th: "กำลัง...", pos: "adv" },
+                    { ch: "以前", py: "yǐqián", en: "before / formerly", th: "เมื่อก่อน/ก่อนหน้า", pos: "noun" },
+                    { ch: "以后", py: "yǐhòu", en: "after / later", th: "หลังจาก/วันหลัง", pos: "noun" },
+                    { ch: "迟到", py: "chídào", en: "to be late", th: "มาสาย", pos: "verb" },
+                    { ch: "准时", py: "zhǔnshí", en: "on time", th: "ตรงเวลา", pos: "adv" },
+                    { ch: "总是", py: "zǒngshì", en: "always", th: "เสมอ/ตลอด", pos: "adv" },
+                    { ch: "很少", py: "hěn shǎo", en: "rarely", th: "แทบจะไม่/น้อยมาก", pos: "adv" },
+                    { ch: "有时候", py: "yǒu shíhou", en: "sometimes", th: "บางครั้ง", pos: "adv" }
+                ]
+            },
+            {
+                category: "Numbers & Measure Words / ตัวเลขและลักษณนาม",
+                icon: "🔢",
+                words: [
+                    { ch: "一", py: "yī", en: "one", th: "หนึ่ง", pos: "num" },
+                    { ch: "二", py: "èr", en: "two", th: "สอง", pos: "num" },
+                    { ch: "两", py: "liǎng", en: "two (quantity)", th: "สอง (จำนวน)", pos: "num" },
+                    { ch: "三", py: "sān", en: "three", th: "สาม", pos: "num" },
+                    { ch: "四", py: "sì", en: "four", th: "สี่", pos: "num" },
+                    { ch: "五", py: "wǔ", en: "five", th: "ห้า", pos: "num" },
+                    { ch: "六", py: "liù", en: "six", th: "หก", pos: "num" },
+                    { ch: "七", py: "qī", en: "seven", th: "เจ็ด", pos: "num" },
+                    { ch: "八", py: "bā", en: "eight", th: "แปด", pos: "num" },
+                    { ch: "九", py: "jiǔ", en: "nine", th: "เก้า", pos: "num" },
+                    { ch: "十", py: "shí", en: "ten", th: "สิบ", pos: "num" },
+                    { ch: "百", py: "bǎi", en: "hundred", th: "ร้อย", pos: "num" },
+                    { ch: "千", py: "qiān", en: "thousand", th: "พัน", pos: "num" },
+                    { ch: "万", py: "wàn", en: "ten thousand", th: "หมื่น", pos: "num" },
+                    { ch: "零", py: "líng", en: "zero", th: "ศูนย์", pos: "num" },
+                    { ch: "半", py: "bàn", en: "half", th: "ครึ่ง", pos: "num" },
+                    { ch: "第一", py: "dì yī", en: "first", th: "ที่หนึ่ง", pos: "num" },
+                    { ch: "个", py: "gè", en: "MW for people/general", th: "อัน/ชิ้น/คน", pos: "mw" },
+                    { ch: "本", py: "běn", en: "MW for books", th: "เล่ม", pos: "mw" },
+                    { ch: "件", py: "jiàn", en: "MW for clothes/matters", th: "ตัว/เรื่อง", pos: "mw" },
+                    { ch: "些", py: "xiē", en: "MW for some/a few", th: "บ้าง/บางส่วน", pos: "mw" },
+                    { ch: "块", py: "kuài", en: "MW for money/pieces", th: "หยวน/ชิ้น/ก้อน", pos: "mw" },
+                    { ch: "杯", py: "bēi", en: "MW for cups/glasses", th: "แก้ว", pos: "mw" },
+                    { ch: "瓶", py: "píng", en: "MW for bottles", th: "ขวด", pos: "mw" },
+                    { ch: "碗", py: "wǎn", en: "MW for bowls", th: "ชาม", pos: "mw" },
+                    { ch: "双", py: "shuāng", en: "MW for pairs", th: "คู่", pos: "mw" },
+                    { ch: "张", py: "zhāng", en: "MW for flat objects", th: "แผ่น/ใบ", pos: "mw" },
+                    { ch: "辆", py: "liàng", en: "MW for vehicles", th: "คัน", pos: "mw" },
+                    { ch: "条", py: "tiáo", en: "MW for long/flexible things", th: "เส้น/ตัว", pos: "mw" },
+                    { ch: "次", py: "cì", en: "MW for times/occurrences", th: "ครั้ง", pos: "mw" }
+                ]
+            },
+            {
+                category: "Food & Drink / อาหารและเครื่องดื่ม",
+                icon: "🍲",
+                words: [
+                    { ch: "水", py: "shuǐ", en: "water", th: "น้ำ", pos: "noun" },
+                    { ch: "茶", py: "chá", en: "tea", th: "ชา", pos: "noun" },
+                    { ch: "咖啡", py: "kāfēi", en: "coffee", th: "กาแฟ", pos: "noun" },
+                    { ch: "牛奶", py: "niúnǎi", en: "milk", th: "นม", pos: "noun" },
+                    { ch: "啤酒", py: "píjiǔ", en: "beer", th: "เบียร์", pos: "noun" },
+                    { ch: "饮料", py: "yǐnliào", en: "beverage", th: "เครื่องดื่ม", pos: "noun" },
+                    { ch: "饭", py: "fàn", en: "cooked rice / meal", th: "ข้าว/อาหาร", pos: "noun" },
+                    { ch: "面条", py: "miàntiáo", en: "noodles", th: "ก๋วยเตี๋ยว/บะหมี่", pos: "noun" },
+                    { ch: "饺子", py: "jiǎozi", en: "dumplings", th: "เกี๊ยว", pos: "noun" },
+                    { ch: "包子", py: "bāozi", en: "steamed stuffed bun", th: "ซาลาเปา", pos: "noun" },
+                    { ch: "面包", py: "miànbāo", en: "bread", th: "ขนมปัง", pos: "noun" },
+                    { ch: "蛋糕", py: "dàngāo", en: "cake", th: "เค้ก", pos: "noun" },
+                    { ch: "肉", py: "ròu", en: "meat", th: "เนื้อ", pos: "noun" },
+                    { ch: "鱼", py: "yú", en: "fish", th: "ปลา", pos: "noun" },
+                    { ch: "鸡蛋", py: "jīdàn", en: "egg", th: "ไข่ไก่", pos: "noun" },
+                    { ch: "鸡肉", py: "jīròu", en: "chicken meat", th: "เนื้อไก่", pos: "noun" },
+                    { ch: "猪肉", py: "zhūròu", en: "pork", th: "เนื้อหมู", pos: "noun" },
+                    { ch: "牛肉", py: "niúròu", en: "beef", th: "เนื้อวัว", pos: "noun" },
+                    { ch: "水果", py: "shuǐguǒ", en: "fruit", th: "ผลไม้", pos: "noun" },
+                    { ch: "苹果", py: "píngguǒ", en: "apple", th: "แอปเปิ้ล", pos: "noun" },
+                    { ch: "橘子", py: "júzi", en: "orange", th: "ส้ม", pos: "noun" },
+                    { ch: "香蕉", py: "xiāngjiāo", en: "banana", th: "กล้วย", pos: "noun" },
+                    { ch: "西瓜", py: "xīguā", en: "watermelon", th: "แตงโม", pos: "noun" },
+                    { ch: "葡萄", py: "pútáo", en: "grape", th: "องุ่น", pos: "noun" },
+                    { ch: "草莓", py: "cǎoméi", en: "strawberry", th: "สตรอว์เบอร์รี", pos: "noun" },
+                    { ch: "蔬菜", py: "shūcài", en: "vegetables", th: "ผัก", pos: "noun" },
+                    { ch: "菜", py: "cài", en: "dish / vegetable", th: "กับข้าว/ผัก", pos: "noun" },
+                    { ch: "汤", py: "tāng", en: "soup", th: "ซุป/น้ำแกง", pos: "noun" },
+                    { ch: "盐", py: "yán", en: "salt", th: "เกลือ", pos: "noun" },
+                    { ch: "糖", py: "táng", en: "sugar", th: "น้ำตาล", pos: "noun" },
+                    { ch: "醋", py: "cù", en: "vinegar", th: "น้ำส้มสายชู", pos: "noun" },
+                    { ch: "酱油", py: "jiàngyóu", en: "soy sauce", th: "ซีอิ๊ว", pos: "noun" },
+                    { ch: "味道", py: "wèidào", en: "taste / flavor", th: "รสชาติ", pos: "noun" },
+                    { ch: "辣", py: "là", en: "spicy", th: "เผ็ด", pos: "adj" },
+                    { ch: "甜", py: "tián", en: "sweet", th: "หวาน", pos: "adj" },
+                    { ch: "酸", py: "suān", en: "sour", th: "เปรี้ยว", pos: "adj" },
+                    { ch: "咸", py: "xián", en: "salty", th: "เค็ม", pos: "adj" },
+                    { ch: "苦", py: "kǔ", en: "bitter", th: "ขม", pos: "adj" },
+                    { ch: "菜单", py: "càidān", en: "menu", th: "เมนู", pos: "noun" },
+                    { ch: "筷子", py: "kuàizi", en: "chopsticks", th: "ตะเกียบ", pos: "noun" }
+                ]
+            },
+            {
+                category: "Places & Directions / สถานที่และทิศทาง",
+                icon: "📍",
+                words: [
+                    { ch: "家", py: "jiā", en: "home / family", th: "บ้าน", pos: "noun" },
+                    { ch: "学校", py: "xuéxiào", en: "school", th: "โรงเรียน", pos: "noun" },
+                    { ch: "公司", py: "gōngsī", en: "company", th: "บริษัท", pos: "noun" },
+                    { ch: "医院", py: "yīyuàn", en: "hospital", th: "โรงพยาบาล", pos: "noun" },
+                    { ch: "银行", py: "yínháng", en: "bank", th: "ธนาคาร", pos: "noun" },
+                    { ch: "饭馆", py: "fànguǎn", en: "restaurant", th: "ร้านอาหาร", pos: "noun" },
+                    { ch: "商店", py: "shāngdiàn", en: "shop / store", th: "ร้านค้า", pos: "noun" },
+                    { ch: "超市", py: "chāoshì", en: "supermarket", th: "ซูเปอร์มาร์เก็ต", pos: "noun" },
+                    { ch: "书店", py: "shūdiàn", en: "bookstore", th: "ร้านหนังสือ", pos: "noun" },
+                    { ch: "邮局", py: "yóujú", en: "post office", th: "ไปรษณีย์", pos: "noun" },
+                    { ch: "机场", py: "jīchǎng", en: "airport", th: "สนามบิน", pos: "noun" },
+                    { ch: "车站", py: "chēzhàn", en: "station / stop", th: "สถานีรถ", pos: "noun" },
+                    { ch: "酒店", py: "jiǔdiàn", en: "hotel", th: "โรงแรม", pos: "noun" },
+                    { ch: "房间", py: "fángjiān", en: "room", th: "ห้อง", pos: "noun" },
+                    { ch: "教室", py: "jiàoshì", en: "classroom", th: "ห้องเรียน", pos: "noun" },
+                    { ch: "办公室", py: "bàngōngshì", en: "office", th: "ห้องทำงาน", pos: "noun" },
+                    { ch: "洗手间", py: "xǐshǒujiān", en: "restroom", th: "ห้องน้ำ", pos: "noun" },
+                    { ch: "图书馆", py: "túshūguǎn", en: "library", th: "ห้องสมุด", pos: "noun" },
+                    { ch: "公园", py: "gōngyuán", en: "park", th: "สวนสาธารณะ", pos: "noun" },
+                    { ch: "地方", py: "dìfang", en: "place", th: "สถานที่", pos: "noun" },
+                    { ch: "上边", py: "shàngbian", en: "above / top", th: "ด้านบน", pos: "noun" },
+                    { ch: "下边", py: "xiàbian", en: "below / bottom", th: "ด้านล่าง", pos: "noun" },
+                    { ch: "前边", py: "qiánbian", en: "front", th: "ด้านหน้า", pos: "noun" },
+                    { ch: "后边", py: "hòubian", en: "back / behind", th: "ด้านหลัง", pos: "noun" },
+                    { ch: "左边", py: "zuǒbian", en: "left side", th: "ด้านซ้าย", pos: "noun" },
+                    { ch: "右边", py: "yòubian", en: "right side", th: "ด้านขวา", pos: "noun" },
+                    { ch: "旁边", py: "pángbiān", en: "beside / next to", th: "ข้างๆ", pos: "noun" },
+                    { ch: "里边", py: "lǐbian", en: "inside", th: "ข้างใน", pos: "noun" },
+                    { ch: "外边", py: "wàibian", en: "outside", th: "ข้างนอก", pos: "noun" },
+                    { ch: "中间", py: "zhōngjiān", en: "middle / between", th: "ตรงกลาง", pos: "noun" }
+                ]
+            }
+        ];
+
+        // --- COMMON WORDS DATA: BATCH 2 (Words 251-500) ---
+        const commonWordsData_Batch2 = [
+            {
+                category: "Questions & Interrogatives / คำถามและคำแสดงคำถาม",
+                icon: "❓",
+                words: [
+                    { ch: "谁", py: "shéi / shuí", en: "who / whom", th: "ใคร", pos: "ques" },
+                    { ch: "什么", py: "shénme", en: "what", th: "อะไร", pos: "ques" },
+                    { ch: "哪", py: "nǎ", en: "which", th: "ไหน/อันไหน", pos: "ques" },
+                    { ch: "哪儿", py: "nǎr", en: "where", th: "ที่ไหน", pos: "ques" },
+                    { ch: "哪里", py: "nǎlǐ", en: "where", th: "ที่ไหน", pos: "ques" },
+                    { ch: "什么时候", py: "shénme shíhou", en: "when", th: "เมื่อไหร่", pos: "ques" },
+                    { ch: "几", py: "jǐ", en: "how many (usually <10)", th: "กี่", pos: "ques" },
+                    { ch: "多少", py: "duōshao", en: "how much / how many", th: "เท่าไหร่", pos: "ques" },
+                    { ch: "怎么", py: "zěnme", en: "how", th: "อย่างไร/ยังไง", pos: "ques" },
+                    { ch: "怎么样", py: "zěnmeyàng", en: "how is it / how about", th: "เป็นอย่างไรบ้าง", pos: "ques" },
+                    { ch: "为什么", py: "wèishénme", en: "why", th: "ทำไม", pos: "ques" },
+                    { ch: "多大", py: "duō dà", en: "how old / how big", th: "อายุเท่าไหร่/ใหญ่แค่ไหน", pos: "ques" },
+                    { ch: "多长", py: "duō cháng", en: "how long", th: "ยาวแค่ไหน/นานแค่ไหน", pos: "ques" },
+                    { ch: "多远", py: "duō yuǎn", en: "how far", th: "ไกลแค่ไหน", pos: "ques" }
+                ]
+            },
+            {
+                category: "Conjunctions & Particles / คำสันธานและคำเสริมน้ำเสียง",
+                icon: "🔗",
+                words: [
+                    { ch: "的", py: "de", en: "possessive / structural particle", th: "ของ/ที่", pos: "part" },
+                    { ch: "得", py: "de", en: "structural particle (after verb)", th: "ได้... (ขยายกริยา)", pos: "part" },
+                    { ch: "地", py: "de", en: "adverbial particle", th: "อย่าง... (ขยายกริยา)", pos: "part" },
+                    { ch: "了", py: "le", en: "completed action / change of state", th: "แล้ว", pos: "part" },
+                    { ch: "着", py: "zhe", en: "continuous action marker", th: "อยู่/กำลัง...อยู่", pos: "part" },
+                    { ch: "过", py: "guo", en: "experienced action marker", th: "เคย", pos: "part" },
+                    { ch: "吗", py: "ma", en: "yes/no question particle", th: "ไหม", pos: "part" },
+                    { ch: "呢", py: "ne", en: "what about... / follow-up", th: "ล่ะ", pos: "part" },
+                    { ch: "吧", py: "ba", en: "suggestion / assumption", th: "เถอะ/สิ/นะ", pos: "part" },
+                    { ch: "和", py: "hé", en: "and / with", th: "และ/กับ", pos: "conj" },
+                    { ch: "跟", py: "gēn", en: "with / and", th: "กับ", pos: "conj" },
+                    { ch: "或者", py: "huòzhě", en: "or (in statements)", th: "หรือ (บอกเล่า)", pos: "conj" },
+                    { ch: "还是", py: "háishi", en: "or (in questions)", th: "หรือ (คำถาม)", pos: "conj" },
+                    { ch: "因为", py: "yīnwèi", en: "because", th: "เพราะว่า", pos: "conj" },
+                    { ch: "所以", py: "suǒyǐ", en: "so / therefore", th: "ดังนั้น/ก็เลย", pos: "conj" },
+                    { ch: "虽然", py: "suīrán", en: "although", th: "ถึงแม้ว่า", pos: "conj" },
+                    { ch: "但是", py: "dànshì", en: "but", th: "แต่ว่า", pos: "conj" },
+                    { ch: "如果", py: "rúguǒ", en: "if", th: "ถ้าหาก", pos: "conj" },
+                    { ch: "就", py: "jiù", en: "then / exactly", th: "ก็", pos: "adv" },
+                    { ch: "不但", py: "búdàn", en: "not only", th: "ไม่เพียงแต่", pos: "conj" },
+                    { ch: "而且", py: "érqiě", en: "but also", th: "แถมยัง/อีกด้วย", pos: "conj" },
+                    { ch: "只要", py: "zhǐyào", en: "as long as", th: "ขอแค่", pos: "conj" },
+                    { ch: "只有", py: "zhǐyǒu", en: "only if", th: "ต้อง...เท่านั้น", pos: "conj" },
+                    { ch: "才", py: "cái", en: "only then / just", th: "ถึงจะ/เพิ่งจะ", pos: "adv" },
+                    { ch: "越", py: "yuè", en: "the more...", th: "ยิ่ง...", pos: "adv" },
+                    { ch: "连", py: "lián", en: "even", th: "แม้แต่", pos: "conj" },
+                    { ch: "都", py: "dōu", en: "all / both / even", th: "ล้วน/ทั้งหมด", pos: "adv" },
+                    { ch: "比", py: "bǐ", en: "compared to / than", th: "กว่า/เทียบกับ", pos: "part" },
+                    { ch: "把", py: "bǎ", en: "object marker (indicates handling)", th: "เอา/นำ (ไปทำบางอย่าง)", pos: "part" },
+                    { ch: "被", py: "bèi", en: "passive voice marker", th: "ถูก/โดน", pos: "part" }
+                ]
+            },
+            {
+                category: "Objects & Everyday Items / สิ่งของในชีวิตประจำวัน",
+                icon: "🎒",
+                words: [
+                    { ch: "东西", py: "dōngxi", en: "thing / object", th: "สิ่งของ", pos: "noun" },
+                    { ch: "手机", py: "shǒujī", en: "mobile phone", th: "โทรศัพท์มือถือ", pos: "noun" },
+                    { ch: "电脑", py: "diànnǎo", en: "computer", th: "คอมพิวเตอร์", pos: "noun" },
+                    { ch: "电视", py: "diànshì", en: "television", th: "โทรทัศน์", pos: "noun" },
+                    { ch: "电影", py: "diànyǐng", en: "movie", th: "ภาพยนตร์", pos: "noun" },
+                    { ch: "钱", py: "qián", en: "money", th: "เงิน", pos: "noun" },
+                    { ch: "钱包", py: "qiánbāo", en: "wallet", th: "กระเป๋าเงิน", pos: "noun" },
+                    { ch: "衣服", py: "yīfu", en: "clothes", th: "เสื้อผ้า", pos: "noun" },
+                    { ch: "裤子", py: "kùzi", en: "trousers / pants", th: "กางเกง", pos: "noun" },
+                    { ch: "裙子", py: "qúnzi", en: "skirt / dress", th: "กระโปรง", pos: "noun" },
+                    { ch: "鞋", py: "xié", en: "shoes", th: "รองเท้า", pos: "noun" },
+                    { ch: "袜子", py: "wàzi", en: "socks", th: "ถุงเท้า", pos: "noun" },
+                    { ch: "帽子", py: "màozi", en: "hat", th: "หมวก", pos: "noun" },
+                    { ch: "眼镜", py: "yǎnjìng", en: "glasses", th: "แว่นตา", pos: "noun" },
+                    { ch: "书", py: "shū", en: "book", th: "หนังสือ", pos: "noun" },
+                    { ch: "笔", py: "bǐ", en: "pen", th: "ปากกา", pos: "noun" },
+                    { ch: "纸", py: "zhǐ", en: "paper", th: "กระดาษ", pos: "noun" },
+                    { ch: "本子", py: "běnzi", en: "notebook", th: "สมุด", pos: "noun" },
+                    { ch: "词典", py: "cídiǎn", en: "dictionary", th: "พจนานุกรม", pos: "noun" },
+                    { ch: "报纸", py: "bàozhǐ", en: "newspaper", th: "หนังสือพิมพ์", pos: "noun" },
+                    { ch: "桌子", py: "zhuōzi", en: "desk / table", th: "โต๊ะ", pos: "noun" },
+                    { ch: "椅子", py: "yǐzi", en: "chair", th: "เก้าอี้", pos: "noun" },
+                    { ch: "床", py: "chuáng", en: "bed", th: "เตียง", pos: "noun" },
+                    { ch: "门", py: "mén", en: "door", th: "ประตู", pos: "noun" },
+                    { ch: "窗户", py: "chuānghu", en: "window", th: "หน้าต่าง", pos: "noun" },
+                    { ch: "灯", py: "dēng", en: "lamp / light", th: "ไฟ/โคมไฟ", pos: "noun" },
+                    { ch: "水杯", py: "shuǐbēi", en: "water cup", th: "แก้วน้ำ", pos: "noun" },
+                    { ch: "伞", py: "sǎn", en: "umbrella", th: "ร่ม", pos: "noun" },
+                    { ch: "包", py: "bāo", en: "bag", th: "กระเป๋า", pos: "noun" },
+                    { ch: "钥匙", py: "yàoshi", en: "key", th: "กุญแจ", pos: "noun" },
+                    { ch: "空调", py: "kōngtiáo", en: "air conditioner", th: "แอร์", pos: "noun" },
+                    { ch: "冰箱", py: "bīngxiāng", en: "refrigerator", th: "ตู้เย็น", pos: "noun" },
+                    { ch: "洗衣机", py: "xǐyījī", en: "washing machine", th: "เครื่องซักผ้า", pos: "noun" },
+                    { ch: "礼物", py: "lǐwù", en: "gift / present", th: "ของขวัญ", pos: "noun" },
+                    { ch: "照片", py: "zhàopiàn", en: "photograph", th: "รูปถ่าย", pos: "noun" },
+                    { ch: "信", py: "xìn", en: "letter", th: "จดหมาย", pos: "noun" },
+                    { ch: "垃圾", py: "lājī", en: "garbage / trash", th: "ขยะ", pos: "noun" },
+                    { ch: "药", py: "yào", en: "medicine", th: "ยา", pos: "noun" },
+                    { ch: "卡", py: "kǎ", en: "card", th: "การ์ด/บัตร", pos: "noun" },
+                    { ch: "信用卡", py: "xìnyòngkǎ", en: "credit card", th: "บัตรเครดิต", pos: "noun" },
+                    { ch: "现金", py: "xiànjīn", en: "cash", th: "เงินสด", pos: "noun" },
+                    { ch: "护照", py: "hùzhào", en: "passport", th: "พาสปอร์ต", pos: "noun" },
+                    { ch: "行李", py: "xíngli", en: "luggage", th: "สัมภาระ", pos: "noun" },
+                    { ch: "票", py: "piào", en: "ticket", th: "ตั๋ว", pos: "noun" }
+                ]
+            },
+            {
+                category: "Transportation & Travel / การเดินทางและยานพาหนะ",
+                icon: "🚗",
+                words: [
+                    { ch: "车", py: "chē", en: "vehicle / car", th: "รถ", pos: "noun" },
+                    { ch: "汽车", py: "qìchē", en: "car", th: "รถยนต์", pos: "noun" },
+                    { ch: "出租车", py: "chūzūchē", en: "taxi", th: "รถแท็กซี่", pos: "noun" },
+                    { ch: "公共汽车", py: "gōnggòng qìchē", en: "bus", th: "รถเมล์", pos: "noun" },
+                    { ch: "地铁", py: "dìtiě", en: "subway", th: "รถไฟใต้ดิน", pos: "noun" },
+                    { ch: "火车", py: "huǒchē", en: "train", th: "รถไฟ", pos: "noun" },
+                    { ch: "飞机", py: "fēijī", en: "airplane", th: "เครื่องบิน", pos: "noun" },
+                    { ch: "自行车", py: "zìxíngchē", en: "bicycle", th: "รถจักรยาน", pos: "noun" },
+                    { ch: "船", py: "chuán", en: "boat / ship", th: "เรือ", pos: "noun" },
+                    { ch: "路", py: "lù", en: "road / path", th: "ถนน/ทาง", pos: "noun" },
+                    { ch: "街", py: "jiē", en: "street", th: "ถนน(ในเมือง)", pos: "noun" },
+                    { ch: "红绿灯", py: "hónglǜdēng", en: "traffic light", th: "ไฟจราจร", pos: "noun" },
+                    { ch: "站", py: "zhàn", en: "station / stop", th: "สถานี", pos: "noun" },
+                    { ch: "飞机场", py: "fēijīchǎng", en: "airport", th: "สนามบิน", pos: "noun" },
+                    { ch: "火车站", py: "huǒchēzhàn", en: "train station", th: "สถานีรถไฟ", pos: "noun" },
+                    { ch: "开车", py: "kāichē", en: "to drive a car", th: "ขับรถ", pos: "verb" },
+                    { ch: "骑", py: "qí", en: "to ride (bike/horse)", th: "ขี่", pos: "verb" },
+                    { ch: "坐", py: "zuò", en: "to take (transport) / to sit", th: "นั่ง(รถ)", pos: "verb" },
+                    { ch: "打车", py: "dǎchē", en: "to take a taxi", th: "เรียกแท็กซี่", pos: "verb" },
+                    { ch: "出差", py: "chūchāi", en: "to go on a business trip", th: "ไปทำงานต่างจังหวัด/ต่างประเทศ", pos: "verb" },
+                    { ch: "旅游", py: "lǚyóu", en: "to travel", th: "ท่องเที่ยว", pos: "verb" },
+                    { ch: "堵车", py: "dǔchē", en: "traffic jam", th: "รถติด", pos: "verb" },
+                    { ch: "桥", py: "qiáo", en: "bridge", th: "สะพาน", pos: "noun" },
+                    { ch: "司机", py: "sījī", en: "driver", th: "คนขับรถ", pos: "noun" },
+                    { ch: "航班", py: "hángbān", en: "flight", th: "เที่ยวบิน", pos: "noun" },
+                    { ch: "晚点", py: "wǎndiǎn", en: "to be delayed", th: "ดีเลย์/ล่าช้า", pos: "verb" },
+                    { ch: "离开", py: "líkāi", en: "to leave / depart", th: "ออกจาก/จากไป", pos: "verb" }
+                ]
+            },
+            {
+                category: "Body Parts & Health / อวัยวะและสุขภาพ",
+                icon: "🩺",
+                words: [
+                    { ch: "身体", py: "shēntǐ", en: "body / health", th: "ร่างกาย/สุขภาพ", pos: "noun" },
+                    { ch: "头", py: "tóu", en: "head", th: "หัว", pos: "noun" },
+                    { ch: "头发", py: "tóufa", en: "hair", th: "เส้นผม", pos: "noun" },
+                    { ch: "眼睛", py: "yǎnjing", en: "eye", th: "ดวงตา", pos: "noun" },
+                    { ch: "耳朵", py: "ěrduo", en: "ear", th: "หู", pos: "noun" },
+                    { ch: "鼻子", py: "bízi", en: "nose", th: "จมูก", pos: "noun" },
+                    { ch: "嘴", py: "zuǐ", en: "mouth", th: "ปาก", pos: "noun" },
+                    { ch: "牙齿", py: "yáchǐ", en: "tooth", th: "ฟัน", pos: "noun" },
+                    { ch: "脸", py: "liǎn", en: "face", th: "ใบหน้า", pos: "noun" },
+                    { ch: "手", py: "shǒu", en: "hand", th: "มือ", pos: "noun" },
+                    { ch: "脚", py: "jiǎo", en: "foot", th: "เท้า", pos: "noun" },
+                    { ch: "腿", py: "tuǐ", en: "leg", th: "ขา", pos: "noun" },
+                    { ch: "肚子", py: "dùzi", en: "belly / stomach", th: "ท้อง", pos: "noun" },
+                    { ch: "疼", py: "téng", en: "pain / ache", th: "ปวด/เจ็บ", pos: "adj" },
+                    { ch: "痛", py: "tòng", en: "pain / ache", th: "ปวด/เจ็บ", pos: "adj" },
+                    { ch: "病", py: "bìng", en: "illness / disease", th: "โรค/ป่วย", pos: "noun" },
+                    { ch: "感冒", py: "gǎnmào", en: "to catch a cold", th: "เป็นหวัด", pos: "verb" },
+                    { ch: "发烧", py: "fāshāo", en: "to have a fever", th: "เป็นไข้", pos: "verb" },
+                    { ch: "咳嗽", py: "késou", en: "to cough", th: "ไอ", pos: "verb" },
+                    { ch: "护士", py: "hùshi", en: "nurse", th: "พยาบาล", pos: "noun" },
+                    { ch: "健康", py: "jiànkāng", en: "healthy / health", th: "สุขภาพ(ดี)", pos: "adj" },
+                    { ch: "检查", py: "jiǎnchá", en: "to examine / check", th: "ตรวจ", pos: "verb" },
+                    { ch: "舒服", py: "shūfu", en: "comfortable / feeling well", th: "สบาย", pos: "adj" }
+                ]
+            },
+            {
+                category: "Weather, Nature & Animals / สภาพอากาศและธรรมชาติ",
+                icon: "⛅",
+                words: [
+                    { ch: "天气", py: "tiānqì", en: "weather", th: "สภาพอากาศ", pos: "noun" },
+                    { ch: "天", py: "tiān", en: "sky / day", th: "ท้องฟ้า/วัน", pos: "noun" },
+                    { ch: "太阳", py: "tàiyáng", en: "sun", th: "ดวงอาทิตย์", pos: "noun" },
+                    { ch: "月亮", py: "yuèliang", en: "moon", th: "ดวงจันทร์", pos: "noun" },
+                    { ch: "星星", py: "xīngxing", en: "star", th: "ดาว", pos: "noun" },
+                    { ch: "云", py: "yún", en: "cloud", th: "เมฆ", pos: "noun" },
+                    { ch: "风", py: "fēng", en: "wind", th: "ลม", pos: "noun" },
+                    { ch: "雨", py: "yǔ", en: "rain", th: "ฝน", pos: "noun" },
+                    { ch: "雪", py: "xuě", en: "snow", th: "หิมะ", pos: "noun" },
+                    { ch: "冰", py: "bīng", en: "ice", th: "น้ำแข็ง", pos: "noun" },
+                    { ch: "山", py: "shān", en: "mountain", th: "ภูเขา", pos: "noun" },
+                    { ch: "水", py: "shuǐ", en: "water", th: "น้ำ", pos: "noun" },
+                    { ch: "河", py: "hé", en: "river", th: "แม่น้ำ", pos: "noun" },
+                    { ch: "海", py: "hǎi", en: "sea / ocean", th: "ทะเล", pos: "noun" },
+                    { ch: "树", py: "shù", en: "tree", th: "ต้นไม้", pos: "noun" },
+                    { ch: "花", py: "huā", en: "flower", th: "ดอกไม้", pos: "noun" },
+                    { ch: "草", py: "cǎo", en: "grass", th: "หญ้า", pos: "noun" },
+                    { ch: "狗", py: "gǒu", en: "dog", th: "หมา", pos: "noun" },
+                    { ch: "猫", py: "māo", en: "cat", th: "แมว", pos: "noun" },
+                    { ch: "鸟", py: "niǎo", en: "bird", th: "นก", pos: "noun" },
+                    { ch: "鱼", py: "yú", en: "fish", th: "ปลา", pos: "noun" },
+                    { ch: "动物", py: "dòngwù", en: "animal", th: "สัตว์", pos: "noun" },
+                    { ch: "晴天", py: "qíngtiān", en: "sunny day", th: "วันที่ฟ้าโปร่ง", pos: "noun" },
+                    { ch: "阴天", py: "yīntiān", en: "cloudy day", th: "วันที่มืดครึ้ม", pos: "noun" },
+                    { ch: "冷", py: "lěng", en: "cold", th: "หนาว", pos: "adj" },
+                    { ch: "热", py: "rè", en: "hot", th: "ร้อน", pos: "adj" },
+                    { ch: "凉快", py: "liángkuai", en: "pleasantly cool", th: "เย็นสบาย", pos: "adj" },
+                    { ch: "暖和", py: "nuǎnhuo", en: "warm", th: "อบอุ่น", pos: "adj" },
+                    { ch: "春天", py: "chūntiān", en: "spring", th: "ฤดูใบไม้ผลิ", pos: "noun" },
+                    { ch: "夏天", py: "xiàtiān", en: "summer", th: "ฤดูร้อน", pos: "noun" },
+                    { ch: "秋天", py: "qiūtiān", en: "autumn", th: "ฤดูใบไม้ร่วง", pos: "noun" },
+                    { ch: "冬天", py: "dōngtiān", en: "winter", th: "ฤดูหนาว", pos: "noun" },
+                    { ch: "刮风", py: "guā fēng", en: "to be windy", th: "ลมพัด", pos: "verb" },
+                    { ch: "下雨", py: "xià yǔ", en: "to rain", th: "ฝนตก", pos: "verb" },
+                    { ch: "下雪", py: "xià xuě", en: "to snow", th: "หิมะตก", pos: "verb" }
+                ]
+            },
+            {
+                category: "Hobbies & Activities / งานอดิเรกและกิจกรรม",
+                icon: "🎨",
+                words: [
+                    { ch: "爱好", py: "àihào", en: "hobby", th: "งานอดิเรก", pos: "noun" },
+                    { ch: "运动", py: "yùndòng", en: "sports / exercise", th: "กีฬา/ออกกำลังกาย", pos: "verb" },
+                    { ch: "跑步", py: "pǎobù", en: "to jog / run", th: "วิ่ง", pos: "verb" },
+                    { ch: "游泳", py: "yóuyǒng", en: "to swim", th: "ว่ายน้ำ", pos: "verb" },
+                    { ch: "篮球", py: "lánqiú", en: "basketball", th: "บาสเกตบอล", pos: "noun" },
+                    { ch: "足球", py: "zúqiú", en: "soccer / football", th: "ฟุตบอล", pos: "noun" },
+                    { ch: "唱歌", py: "chànggē", en: "to sing a song", th: "ร้องเพลง", pos: "verb" },
+                    { ch: "跳舞", py: "tiàowǔ", en: "to dance", th: "เต้นรำ", pos: "verb" },
+                    { ch: "音乐", py: "yīnyuè", en: "music", th: "ดนตรี/เพลง", pos: "noun" },
+                    { ch: "画画", py: "huàhuà", en: "to draw", th: "วาดรูป", pos: "verb" },
+                    { ch: "上网", py: "shàngwǎng", en: "to surf the internet", th: "เล่นเน็ต", pos: "verb" },
+                    { ch: "游戏", py: "yóuxì", en: "game", th: "เกม", pos: "noun" },
+                    { ch: "读书", py: "dúshū", en: "to read a book / study", th: "อ่านหนังสือ", pos: "verb" },
+                    { ch: "照相", py: "zhàoxiàng", en: "to take a photo", th: "ถ่ายรูป", pos: "verb" },
+                    { ch: "逛街", py: "guàngjiē", en: "to go shopping / stroll", th: "เดินเล่น/ช้อปปิ้ง", pos: "verb" },
+                    { ch: "比赛", py: "bǐsài", en: "match / competition", th: "การแข่งขัน", pos: "noun" },
+                    { ch: "赢", py: "yíng", en: "to win", th: "ชนะ", pos: "verb" },
+                    { ch: "输", py: "shū", en: "to lose", th: "แพ้", pos: "verb" },
+                    { ch: "锻炼", py: "duànliàn", en: "to exercise / workout", th: "ฝึกฝน/ออกกำลังกาย", pos: "verb" },
+                    { ch: "聚会", py: "jùhuì", en: "party / gathering", th: "งานปาร์ตี้/รวมตัว", pos: "noun" },
+                    { ch: "节目", py: "jiémù", en: "program / show", th: "รายการ(ทีวี/โชว์)", pos: "noun" },
+                    { ch: "晚会", py: "wǎnhuì", en: "evening party", th: "งานเลี้ยงกลางคืน", pos: "noun" },
+                    { ch: "聊天", py: "liáotiān", en: "to chat", th: "พูดคุย/แชท", pos: "verb" },
+                    { ch: "爬山", py: "páshān", en: "to climb a mountain", th: "ปีนเขา", pos: "verb" },
+                    { ch: "散步", py: "sànbù", en: "to take a walk", th: "เดินเล่น", pos: "verb" },
+                    { ch: "练习", py: "liànxí", en: "to practice", th: "ฝึกฝน", pos: "verb" },
+                    { ch: "复习", py: "fùxí", en: "to review", th: "ทบทวน(บทเรียน)", pos: "verb" },
+                    { ch: "考试", py: "kǎoshì", en: "exam / to test", th: "สอบ", pos: "verb" },
+                    { ch: "参加", py: "cānjiā", en: "to participate", th: "เข้าร่วม", pos: "verb" },
+                    { ch: "表演", py: "biǎoyǎn", en: "performance / to act", th: "การแสดง", pos: "verb" }
+                ]
+            },
+            {
+                category: "Action & State Verbs / กริยาแสดงการกระทำและสถานะ",
+                icon: "🎬",
+                words: [
+                    { ch: "送", py: "sòng", en: "to deliver / to give (gift)", th: "ส่ง/มอบให้", pos: "verb" },
+                    { ch: "借", py: "jiè", en: "to borrow / to lend", th: "ยืม/ให้ยืม", pos: "verb" },
+                    { ch: "还", py: "huán", en: "to return (something)", th: "คืน(ของ)", pos: "verb" },
+                    { ch: "换", py: "huàn", en: "to change / to exchange", th: "เปลี่ยน/แลก", pos: "verb" },
+                    { ch: "丢", py: "diū", en: "to lose / to throw", th: "หาย/ทิ้ง", pos: "verb" },
+                    { ch: "发现", py: "fāxiàn", en: "to discover / find out", th: "ค้นพบ/พบว่า", pos: "verb" },
+                    { ch: "发生", py: "fāshēng", en: "to happen / occur", th: "เกิดขึ้น", pos: "verb" },
+                    { ch: "变", py: "biàn", en: "to change", th: "เปลี่ยน", pos: "verb" },
+                    { ch: "变成", py: "biànchéng", en: "to become", th: "กลายเป็น", pos: "verb" },
+                    { ch: "结束", py: "jiéshù", en: "to end / to finish", th: "จบ/สิ้นสุด", pos: "verb" },
+                    { ch: "决定", py: "juédìng", en: "to decide", th: "ตัดสินใจ", pos: "verb" },
+                    { ch: "希望", py: "xīwàng", en: "to hope", th: "หวังว่า", pos: "verb" },
+                    { ch: "相信", py: "xiāngxìn", en: "to believe", th: "เชื่อ", pos: "verb" },
+                    { ch: "忘", py: "wàng", en: "to forget", th: "ลืม", pos: "verb" },
+                    { ch: "记", py: "jì", en: "to remember / to note", th: "จำ/จด", pos: "verb" },
+                    { ch: "记得", py: "jìde", en: "to remember", th: "จำได้", pos: "verb" },
+                    { ch: "明白", py: "míngbai", en: "to understand clearly", th: "เข้าใจชัดเจน", pos: "verb" },
+                    { ch: "帮忙", py: "bāngmáng", en: "to help / do a favor", th: "ช่วยเหลือ", pos: "verb" },
+                    { ch: "关心", py: "guānxīn", en: "to care for", th: "ใส่ใจ/ห่วงใย", pos: "verb" },
+                    { ch: "注意", py: "zhùyì", en: "to pay attention to", th: "ระวัง/สังเกต", pos: "verb" },
+                    { ch: "比较", py: "bǐjiào", en: "to compare", th: "เปรียบเทียบ", pos: "verb" },
+                    { ch: "影响", py: "yǐngxiǎng", en: "to influence", th: "มีอิทธิพลต่อ/ส่งผลกระทบ", pos: "verb" },
+                    { ch: "解决", py: "jiějué", en: "to solve / resolve", th: "แก้ไข(ปัญหา)", pos: "verb" },
+                    { ch: "遇到", py: "yùdào", en: "to meet / run into", th: "พบเจอ(โดยบังเอิญ)", pos: "verb" }
+                ]
+            }
+        ];
+
+        // --- COMMON WORDS DATA: BATCH 3 (Words 251-504) ---
+        const commonWordsData_Batch3 = [
+            {
+                category: "Directions & Prepositions / ทิศทางและคำบุพบท",
+                icon: "🧭",
+                words: [
+                    { ch: "东", py: "dōng", en: "east", th: "ทิศตะวันออก", pos: "noun" },
+                    { ch: "南", py: "nán", en: "south", th: "ทิศใต้", pos: "noun" },
+                    { ch: "西", py: "xī", en: "west", th: "ทิศตะวันตก", pos: "noun" },
+                    { ch: "北", py: "běi", en: "north", th: "ทิศเหนือ", pos: "noun" },
+                    { ch: "上边", py: "shàngbian", en: "above / over", th: "ด้านบน", pos: "noun" },
+                    { ch: "下边", py: "xiàbian", en: "below / under", th: "ด้านล่าง", pos: "noun" },
+                    { ch: "左边", py: "zuǒbian", en: "left side", th: "ด้านซ้าย", pos: "noun" },
+                    { ch: "右边", py: "yòubian", en: "right side", th: "ด้านขวา", pos: "noun" },
+                    { ch: "前边", py: "qiánbian", en: "in front", th: "ด้านหน้า", pos: "noun" },
+                    { ch: "后边", py: "hòubian", en: "behind / back", th: "ด้านหลัง", pos: "noun" },
+                    { ch: "里边", py: "lǐbian", en: "inside", th: "ข้างใน", pos: "noun" },
+                    { ch: "外边", py: "wàibian", en: "outside", th: "ข้างนอก", pos: "noun" },
+                    { ch: "中间", py: "zhōngjiān", en: "middle / center", th: "ตรงกลาง", pos: "noun" },
+                    { ch: "旁边", py: "pángbiān", en: "beside / next to", th: "ข้างๆ", pos: "noun" },
+                    { ch: "附近", py: "fùjìn", en: "nearby / vicinity", th: "บริเวณใกล้เคียง", pos: "noun" },
+                    { ch: "对面", py: "duìmiàn", en: "opposite", th: "ฝั่งตรงข้าม", pos: "noun" },
+                    { ch: "方向", py: "fāngxiàng", en: "direction", th: "ทิศทาง", pos: "noun" },
+                    { ch: "位置", py: "wèizhì", en: "position / location", th: "ตำแหน่ง", pos: "noun" },
+                    { ch: "向", py: "xiàng", en: "towards", th: "ไปทาง", pos: "prep" },
+                    { ch: "往", py: "wǎng", en: "towards / to", th: "ไปทาง/สู่", pos: "prep" },
+                    { ch: "从", py: "cóng", en: "from", th: "จาก", pos: "prep" },
+                    { ch: "到", py: "dào", en: "to / arrive", th: "ถึง", pos: "prep" },
+                    { ch: "在", py: "zài", en: "at / in / on", th: "อยู่ที่", pos: "prep" },
+                    { ch: "离", py: "lí", en: "away from (distance)", th: "ห่างจาก", pos: "prep" }
+                ]
+            },
+            {
+                category: "Work, Study & Office / การทำงาน การเรียน และสำนักงาน",
+                icon: "🏢",
+                words: [
+                    { ch: "工作", py: "gōngzuò", en: "work / job", th: "ทำงาน/งาน", pos: "verb" },
+                    { ch: "上班", py: "shàngbān", en: "go to work", th: "เข้างาน", pos: "verb" },
+                    { ch: "下班", py: "xiàbān", en: "get off work", th: "เลิกงาน", pos: "verb" },
+                    { ch: "办公室", py: "bàngōngshì", en: "office", th: "ห้องทำงาน", pos: "noun" },
+                    { ch: "开会", py: "kāihuì", en: "have a meeting", th: "ประชุม", pos: "verb" },
+                    { ch: "会议", py: "huìyì", en: "meeting / conference", th: "การประชุม", pos: "noun" },
+                    { ch: "公司", py: "gōngsī", en: "company", th: "บริษัท", pos: "noun" },
+                    { ch: "老板", py: "lǎobǎn", en: "boss", th: "เจ้านาย/เถ้าแก่", pos: "noun" },
+                    { ch: "经理", py: "jīnglǐ", en: "manager", th: "ผู้จัดการ", pos: "noun" },
+                    { ch: "同事", py: "tóngshì", en: "colleague", th: "เพื่อนร่วมงาน", pos: "noun" },
+                    { ch: "职业", py: "zhíyè", en: "profession / occupation", th: "อาชีพ", pos: "noun" },
+                    { ch: "计划", py: "jìhuà", en: "plan", th: "แผนการ", pos: "noun" },
+                    { ch: "面试", py: "miànshì", en: "interview", th: "สัมภาษณ์", pos: "verb" },
+                    { ch: "学校", py: "xuéxiào", en: "school", th: "โรงเรียน", pos: "noun" },
+                    { ch: "教室", py: "jiàoshì", en: "classroom", th: "ห้องเรียน", pos: "noun" },
+                    { ch: "学习", py: "xuéxí", en: "study / learn", th: "เรียน", pos: "verb" },
+                    { ch: "课", py: "kè", en: "class / lesson", th: "คาบเรียน/บทเรียน", pos: "noun" },
+                    { ch: "上课", py: "shàngkè", en: "attend class", th: "เข้าเรียน", pos: "verb" },
+                    { ch: "下课", py: "xiàkè", en: "finish class", th: "เลิกเรียน", pos: "verb" },
+                    { ch: "考试", py: "kǎoshì", en: "exam / test", th: "สอบ", pos: "verb" },
+                    { ch: "成绩", py: "chéngjì", en: "grade / score", th: "คะแนนสอบ", pos: "noun" },
+                    { ch: "作业", py: "zuòyè", en: "homework", th: "การบ้าน", pos: "noun" },
+                    { ch: "问题", py: "wèntí", en: "question / problem", th: "คำถาม/ปัญหา", pos: "noun" },
+                    { ch: "回答", py: "huídá", en: "answer", th: "ตอบ", pos: "verb" },
+                    { ch: "练习", py: "liànxí", en: "practice / exercise", th: "ฝึกฝน/แบบฝึกหัด", pos: "verb" },
+                    { ch: "复习", py: "fùxí", en: "review", th: "ทบทวน", pos: "verb" },
+                    { ch: "明白", py: "míngbai", en: "understand", th: "เข้าใจ", pos: "verb" },
+                    { ch: "懂", py: "dǒng", en: "understand / comprehend", th: "เข้าใจ", pos: "verb" },
+                    { ch: "毕业", py: "bìyè", en: "graduate", th: "เรียนจบ", pos: "verb" },
+                    { ch: "语言", py: "yǔyán", en: "language", th: "ภาษา", pos: "noun" },
+                    { ch: "汉字", py: "Hànzì", en: "Chinese character", th: "ตัวอักษรจีน", pos: "noun" },
+                    { ch: "拼音", py: "Pīnyīn", en: "Pinyin", th: "พินอิน", pos: "noun" },
+                    { ch: "历史", py: "lìshǐ", en: "history", th: "ประวัติศาสตร์", pos: "noun" },
+                    { ch: "数学", py: "shùxué", en: "mathematics", th: "คณิตศาสตร์", pos: "noun" },
+                    { ch: "文化", py: "wénhuà", en: "culture", th: "วัฒนธรรม", pos: "noun" }
+                ]
+            },
+            {
+                category: "Household & Daily Necessities / ของใช้ในบ้านและชีวิตประจำวัน",
+                icon: "🏠",
+                words: [
+                    { ch: "家", py: "jiā", en: "home / family", th: "บ้าน/ครอบครัว", pos: "noun" },
+                    { ch: "房子", py: "fángzi", en: "house / building", th: "บ้าน/ตึก", pos: "noun" },
+                    { ch: "房间", py: "fángjiān", en: "room", th: "ห้อง", pos: "noun" },
+                    { ch: "门", py: "mén", en: "door", th: "ประตู", pos: "noun" },
+                    { ch: "窗户", py: "chuānghu", en: "window", th: "หน้าต่าง", pos: "noun" },
+                    { ch: "墙", py: "qiáng", en: "wall", th: "ผนัง/กำแพง", pos: "noun" },
+                    { ch: "厨房", py: "chúfáng", en: "kitchen", th: "ห้องครัว", pos: "noun" },
+                    { ch: "洗手间", py: "xǐshǒujiān", en: "restroom", th: "ห้องน้ำ", pos: "noun" },
+                    { ch: "客厅", py: "kètīng", en: "living room", th: "ห้องนั่งเล่น", pos: "noun" },
+                    { ch: "卧室", py: "wòshì", en: "bedroom", th: "ห้องนอน", pos: "noun" },
+                    { ch: "家具", py: "jiājù", en: "furniture", th: "เฟอร์นิเจอร์", pos: "noun" },
+                    { ch: "桌子", py: "zhuōzi", en: "table / desk", th: "โต๊ะ", pos: "noun" },
+                    { ch: "椅子", py: "yǐzi", en: "chair", th: "เก้าอี้", pos: "noun" },
+                    { ch: "沙发", py: "shāfā", en: "sofa", th: "โซฟา", pos: "noun" },
+                    { ch: "床", py: "chuáng", en: "bed", th: "เตียง", pos: "noun" },
+                    { ch: "柜子", py: "guìzi", en: "cabinet / cupboard", th: "ตู้", pos: "noun" },
+                    { ch: "电视", py: "diànshì", en: "TV", th: "ทีวี", pos: "noun" },
+                    { ch: "空调", py: "kōngtiáo", en: "air conditioner", th: "แอร์", pos: "noun" },
+                    { ch: "冰箱", py: "bīngxiāng", en: "refrigerator", th: "ตู้เย็น", pos: "noun" },
+                    { ch: "洗衣机", py: "xǐyījī", en: "washing machine", th: "เครื่องซักผ้า", pos: "noun" },
+                    { ch: "灯", py: "dēng", en: "lamp / light", th: "หลอดไฟ", pos: "noun" },
+                    { ch: "镜子", py: "jìngzi", en: "mirror", th: "กระจก", pos: "noun" },
+                    { ch: "毛巾", py: "máojīn", en: "towel", th: "ผ้าเช็ดตัว", pos: "noun" },
+                    { ch: "牙刷", py: "yáshuā", en: "toothbrush", th: "แปรงสีฟัน", pos: "noun" },
+                    { ch: "牙膏", py: "yágāo", en: "toothpaste", th: "ยาสีฟัน", pos: "noun" },
+                    { ch: "肥皂", py: "féizào", en: "soap", th: "สบู่", pos: "noun" },
+                    { ch: "洗发水", py: "xǐfàshuǐ", en: "shampoo", th: "แชมพู", pos: "noun" },
+                    { ch: "卫生纸", py: "wèishēngzhǐ", en: "toilet paper", th: "กระดาษทิชชู่", pos: "noun" },
+                    { ch: "垃圾桶", py: "lājītǒng", en: "trash can", th: "ถังขยะ", pos: "noun" },
+                    { ch: "碗", py: "wǎn", en: "bowl", th: "ชาม", pos: "noun" },
+                    { ch: "盘子", py: "pánzi", en: "plate", th: "จาน", pos: "noun" },
+                    { ch: "筷子", py: "kuàizi", en: "chopsticks", th: "ตะเกียบ", pos: "noun" },
+                    { ch: "勺子", py: "sháozi", en: "spoon", th: "ช้อน", pos: "noun" },
+                    { ch: "叉子", py: "chāzi", en: "fork", th: "ส้อม", pos: "noun" },
+                    { ch: "杯子", py: "bēizi", en: "cup / glass", th: "แก้ว", pos: "noun" },
+                    { ch: "瓶子", py: "píngzi", en: "bottle", th: "ขวด", pos: "noun" },
+                    { ch: "锅", py: "guō", en: "pot / pan", th: "หม้อ/กระทะ", pos: "noun" },
+                    { ch: "刀", py: "dāo", en: "knife", th: "มีด", pos: "noun" },
+                    { ch: "钟", py: "zhōng", en: "clock", th: "นาฬิกาแขวน", pos: "noun" },
+                    { ch: "表", py: "biǎo", en: "watch", th: "นาฬิกาข้อมือ", pos: "noun" }
+                ]
+            },
+            {
+                category: "Feelings, Traits & States / ความรู้สึก ลักษณะนิสัย และสถานะ",
+                icon: "❤️",
+                words: [
+                    { ch: "高兴", py: "gāoxìng", en: "happy / glad", th: "ดีใจ", pos: "adj" },
+                    { ch: "开心", py: "kāixīn", en: "happy", th: "มีความสุข", pos: "adj" },
+                    { ch: "伤心", py: "shāngxīn", en: "sad / broken-hearted", th: "เสียใจ", pos: "adj" },
+                    { ch: "难过", py: "nánguò", en: "sad / sorry", th: "เศร้าใจ", pos: "adj" },
+                    { ch: "生气", py: "shēngqì", en: "angry", th: "โกรธ", pos: "adj" },
+                    { ch: "害怕", py: "hàipà", en: "afraid / scared", th: "กลัว", pos: "adj" },
+                    { ch: "紧张", py: "jǐnzhāng", en: "nervous", th: "ตื่นเต้น/ประหม่า", pos: "adj" },
+                    { ch: "着急", py: "zháojí", en: "anxious / worried", th: "รีบร้อน/กังวล", pos: "adj" },
+                    { ch: "担心", py: "dānxīn", en: "to worry", th: "เป็นห่วง", pos: "verb" },
+                    { ch: "放心", py: "fàngxīn", en: "to feel relieved", th: "วางใจ", pos: "verb" },
+                    { ch: "奇怪", py: "qíguài", en: "strange / weird", th: "แปลก", pos: "adj" },
+                    { ch: "满意", py: "mǎnyì", en: "satisfied", th: "พอใจ", pos: "adj" },
+                    { ch: "骄傲", py: "jiāo'ào", en: "proud", th: "ภูมิใจ", pos: "adj" },
+                    { ch: "失望", py: "shīwàng", en: "disappointed", th: "ผิดหวัง", pos: "adj" },
+                    { ch: "激动", py: "jīdòng", en: "excited", th: "ตื่นเต้นเร้าใจ", pos: "adj" },
+                    { ch: "热情", py: "rèqíng", en: "enthusiastic / warm", th: "กระตือรือร้น", pos: "adj" },
+                    { ch: "客气", py: "kèqi", en: "polite", th: "เกรงใจ/สุภาพ", pos: "adj" },
+                    { ch: "聪明", py: "cōngming", en: "smart / clever", th: "ฉลาด", pos: "adj" },
+                    { ch: "笨", py: "bèn", en: "stupid / foolish", th: "โง่", pos: "adj" },
+                    { ch: "懒", py: "lǎn", en: "lazy", th: "ขี้เกียจ", pos: "adj" },
+                    { ch: "努力", py: "nǔlì", en: "hardworking", th: "ขยัน", pos: "adj" },
+                    { ch: "认真", py: "rènzhēn", en: "serious / earnest", th: "จริงจัง", pos: "adj" },
+                    { ch: "勇敢", py: "yǒnggǎn", en: "brave", th: "กล้าหาญ", pos: "adj" },
+                    { ch: "诚实", py: "chéngshí", en: "honest", th: "ซื่อสัตย์", pos: "adj" },
+                    { ch: "幽默", py: "yōumò", en: "humorous", th: "มีอารมณ์ขัน", pos: "adj" },
+                    { ch: "漂亮", py: "piàoliang", en: "beautiful / pretty", th: "สวย", pos: "adj" },
+                    { ch: "帅", py: "shuài", en: "handsome", th: "หล่อ", pos: "adj" },
+                    { ch: "可爱", py: "kě'ài", en: "cute", th: "น่ารัก", pos: "adj" },
+                    { ch: "舒服", py: "shūfu", en: "comfortable", th: "สบาย", pos: "adj" },
+                    { ch: "难受", py: "nánshòu", en: "uncomfortable", th: "ทรมาน/ไม่สบาย", pos: "adj" },
+                    { ch: "累", py: "lèi", en: "tired", th: "เหนื่อย", pos: "adj" },
+                    { ch: "困", py: "kùn", en: "sleepy", th: "ง่วงนอน", pos: "adj" },
+                    { ch: "容易", py: "róngyì", en: "easy", th: "ง่าย", pos: "adj" },
+                    { ch: "难", py: "nán", en: "difficult / hard", th: "ยาก", pos: "adj" },
+                    { ch: "简单", py: "jiǎndān", en: "simple", th: "เรียบง่าย", pos: "adj" },
+                    { ch: "复杂", py: "fùzá", en: "complicated", th: "ซับซ้อน", pos: "adj" },
+                    { ch: "清楚", py: "qīngchu", en: "clear", th: "ชัดเจน", pos: "adj" },
+                    { ch: "糊涂", py: "hútu", en: "confused", th: "เลอะเลือน/สับสน", pos: "adj" },
+                    { ch: "重要", py: "zhòngyào", en: "important", th: "สำคัญ", pos: "adj" },
+                    { ch: "危险", py: "wēixiǎn", en: "dangerous", th: "อันตราย", pos: "adj" },
+                    { ch: "安全", py: "ānquán", en: "safe", th: "ปลอดภัย", pos: "adj" }
+                ]
+            },
+            {
+                category: "Colors, Sizes & Materials / สี ขนาด และวัสดุ",
+                icon: "🎨",
+                words: [
+                    { ch: "颜色", py: "yánsè", en: "color", th: "สี", pos: "noun" },
+                    { ch: "红", py: "hóng", en: "red", th: "สีแดง", pos: "adj" },
+                    { ch: "黄", py: "huáng", en: "yellow", th: "สีเหลือง", pos: "adj" },
+                    { ch: "蓝", py: "lán", en: "blue", th: "สีน้ำเงิน", pos: "adj" },
+                    { ch: "绿", py: "lǜ", en: "green", th: "สีเขียว", pos: "adj" },
+                    { ch: "黑", py: "hēi", en: "black", th: "สีดำ", pos: "adj" },
+                    { ch: "白", py: "bái", en: "white", th: "สีขาว", pos: "adj" },
+                    { ch: "灰", py: "huī", en: "gray", th: "สีเทา", pos: "adj" },
+                    { ch: "棕", py: "zōng", en: "brown", th: "สีน้ำตาล", pos: "adj" },
+                    { ch: "粉", py: "fěn", en: "pink", th: "สีชมพู", pos: "adj" },
+                    { ch: "紫", py: "zǐ", en: "purple", th: "สีม่วง", pos: "adj" },
+                    { ch: "深", py: "shēn", en: "dark / deep", th: "เข้ม/ลึก", pos: "adj" },
+                    { ch: "浅", py: "qiǎn", en: "light / shallow", th: "อ่อน/ตื้น", pos: "adj" },
+                    { ch: "长", py: "cháng", en: "long", th: "ยาว", pos: "adj" },
+                    { ch: "短", py: "duǎn", en: "short (length)", th: "สั้น", pos: "adj" },
+                    { ch: "高", py: "gāo", en: "tall / high", th: "สูง", pos: "adj" },
+                    { ch: "矮", py: "ǎi", en: "short (height)", th: "เตี้ย", pos: "adj" },
+                    { ch: "胖", py: "pàng", en: "fat", th: "อ้วน", pos: "adj" },
+                    { ch: "瘦", py: "shòu", en: "thin", th: "ผอม", pos: "adj" },
+                    { ch: "粗", py: "cū", en: "thick / rough", th: "หนา/หยาบ", pos: "adj" },
+                    { ch: "细", py: "xì", en: "thin / fine", th: "บาง/ละเอียด", pos: "adj" },
+                    { ch: "宽", py: "kuān", en: "wide", th: "กว้าง", pos: "adj" },
+                    { ch: "窄", py: "zhǎi", en: "narrow", th: "แคบ", pos: "adj" },
+                    { ch: "重", py: "zhòng", en: "heavy", th: "หนัก", pos: "adj" },
+                    { ch: "轻", py: "qīng", en: "light (weight)", th: "เบา", pos: "adj" },
+                    { ch: "厚", py: "hòu", en: "thick (flat objects)", th: "หนา (แบนๆ)", pos: "adj" },
+                    { ch: "薄", py: "báo", en: "thin (flat objects)", th: "บาง (แบนๆ)", pos: "adj" },
+                    { ch: "圆", py: "yuán", en: "round", th: "กลม", pos: "adj" },
+                    { ch: "方", py: "fāng", en: "square", th: "เหลี่ยม", pos: "adj" },
+                    { ch: "平", py: "píng", en: "flat", th: "แบน/เรียบ", pos: "adj" },
+                    { ch: "金", py: "jīn", en: "gold", th: "ทอง", pos: "noun" },
+                    { ch: "银", py: "yín", en: "silver", th: "เงิน", pos: "noun" },
+                    { ch: "铁", py: "tiě", en: "iron", th: "เหล็ก", pos: "noun" },
+                    { ch: "木", py: "mù", en: "wood", th: "ไม้", pos: "noun" },
+                    { ch: "玻璃", py: "bōli", en: "glass", th: "กระจก/แก้ว", pos: "noun" },
+                    { ch: "塑料", py: "sùliào", en: "plastic", th: "พลาสติก", pos: "noun" }
+                ]
+            }
+        ];
+
+        // --- COMMON WORDS DATA: BATCH 4 (Words 751-1000) ---
+        const commonWordsData_Batch4 = [
+            {
+                category: "Technology, Internet & Media / เทคโนโลยีและอินเทอร์เน็ต",
+                icon: "📱",
+                words: [
+                    { ch: "网", py: "wǎng", en: "internet / net", th: "อินเทอร์เน็ต/ตาข่าย", pos: "noun" },
+                    { ch: "互联网", py: "hùliánwǎng", en: "the Internet", th: "อินเทอร์เน็ต", pos: "noun" },
+                    { ch: "网站", py: "wǎngzhàn", en: "website", th: "เว็บไซต์", pos: "noun" },
+                    { ch: "密码", py: "mìmǎ", en: "password", th: "รหัสผ่าน", pos: "noun" },
+                    { ch: "邮件", py: "yóujiàn", en: "email / mail", th: "อีเมล/จดหมาย", pos: "noun" },
+                    { ch: "短信", py: "duǎnxìn", en: "text message", th: "ข้อความ (SMS)", pos: "noun" },
+                    { ch: "视频", py: "shìpín", en: "video", th: "วิดีโอ", pos: "noun" },
+                    { ch: "软件", py: "ruǎnjiàn", en: "software / app", th: "ซอฟต์แวร์/แอป", pos: "noun" },
+                    { ch: "游戏", py: "yóuxì", en: "game", th: "เกม", pos: "noun" },
+                    { ch: "电池", py: "diànchí", en: "battery", th: "แบตเตอรี่", pos: "noun" },
+                    { ch: "信号", py: "xìnhào", en: "signal", th: "สัญญาณ", pos: "noun" },
+                    { ch: "屏幕", py: "píngmù", en: "screen", th: "หน้าจอ", pos: "noun" },
+                    { ch: "键盘", py: "jiànpán", en: "keyboard", th: "คีย์บอร์ด", pos: "noun" },
+                    { ch: "鼠标", py: "shǔbiāo", en: "mouse (computer)", th: "เมาส์", pos: "noun" },
+                    { ch: "发", py: "fā", en: "to send", th: "ส่ง (ข้อความ/อีเมล)", pos: "verb" },
+                    { ch: "收", py: "shōu", en: "to receive", th: "รับ", pos: "verb" },
+                    { ch: "下载", py: "xiàzài", en: "to download", th: "ดาวน์โหลด", pos: "verb" },
+                    { ch: "打印", py: "dǎyìn", en: "to print", th: "พิมพ์ (ปรินต์)", pos: "verb" },
+                    { ch: "朋友圈", py: "péngyǒu quān", en: "Moments (WeChat)", th: "ไทม์ไลน์ (WeChat)", pos: "noun" },
+                    { ch: "扫码", py: "sǎo mǎ", en: "to scan QR code", th: "สแกนคิวอาร์โค้ด", pos: "verb" },
+                    { ch: "点赞", py: "diǎn zàn", en: "to like (online)", th: "กดไลก์", pos: "verb" }
+                ]
+            },
+            {
+                category: "Shopping, Finance & Commerce / การช้อปปิ้ง การเงิน และธุรกิจ",
+                icon: "💰",
+                words: [
+                    { ch: "价格", py: "jiàgé", en: "price", th: "ราคา", pos: "noun" },
+                    { ch: "零钱", py: "língqián", en: "small change", th: "เงินทอน/เงินย่อย", pos: "noun" },
+                    { ch: "信用卡", py: "xìnyòngkǎ", en: "credit card", th: "บัตรเครดิต", pos: "noun" },
+                    { ch: "现金", py: "xiànjīn", en: "cash", th: "เงินสด", pos: "noun" },
+                    { ch: "钱包", py: "qiánbāo", en: "wallet", th: "กระเป๋าเงิน", pos: "noun" },
+                    { ch: "账单", py: "zhàngdān", en: "bill", th: "บิล/ใบแจ้งหนี้", pos: "noun" },
+                    { ch: "收据", py: "shōujù", en: "receipt", th: "ใบเสร็จรับเงิน", pos: "noun" },
+                    { ch: "售货员", py: "shòuhuòyuán", en: "salesperson", th: "พนักงานขาย", pos: "noun" },
+                    { ch: "顾客", py: "gùkè", en: "customer", th: "ลูกค้า", pos: "noun" },
+                    { ch: "商场", py: "shāngchǎng", en: "shopping mall", th: "ห้างสรรพสินค้า", pos: "noun" },
+                    { ch: "打折", py: "dǎzhé", en: "to give a discount", th: "ลดราคา", pos: "verb" },
+                    { ch: "免费", py: "miǎnfèi", en: "free of charge", th: "ฟรี", pos: "adj" },
+                    { ch: "付款", py: "fùkuǎn", en: "to pay a sum of money", th: "จ่ายเงิน", pos: "verb" },
+                    { ch: "退", py: "tuì", en: "to return (goods)", th: "คืน(สินค้า)", pos: "verb" },
+                    { ch: "质量", py: "zhìliàng", en: "quality", th: "คุณภาพ", pos: "noun" },
+                    { ch: "牌子", py: "páizi", en: "brand", th: "ยี่ห้อ", pos: "noun" },
+                    { ch: "广告", py: "guǎnggào", en: "advertisement", th: "โฆษณา", pos: "noun" },
+                    { ch: "经济", py: "jīngjì", en: "economy", th: "เศรษฐกิจ", pos: "noun" },
+                    { ch: "生意", py: "shēngyi", en: "business", th: "ธุรกิจ/การค้า", pos: "noun" }
+                ]
+            },
+            {
+                category: "Abstract Concepts & Nouns / นามธรรมและแนวคิด",
+                icon: "💡",
+                words: [
+                    { ch: "方法", py: "fāngfǎ", en: "method / way", th: "วิธี/วิธีการ", pos: "noun" },
+                    { ch: "办法", py: "bànfǎ", en: "solution / means", th: "วิธีแก้ปัญหา", pos: "noun" },
+                    { ch: "想法", py: "xiǎngfǎ", en: "idea / opinion", th: "ความคิดเห็น", pos: "noun" },
+                    { ch: "经验", py: "jīngyàn", en: "experience", th: "ประสบการณ์", pos: "noun" },
+                    { ch: "机会", py: "jīhuì", en: "opportunity / chance", th: "โอกาส", pos: "noun" },
+                    { ch: "关系", py: "guānxi", en: "relationship / connection", th: "ความสัมพันธ์", pos: "noun" },
+                    { ch: "答案", py: "dá'àn", en: "answer", th: "คำตอบ", pos: "noun" },
+                    { ch: "原因", py: "yuányīn", en: "reason / cause", th: "สาเหตุ/เหตุผล", pos: "noun" },
+                    { ch: "结果", py: "jiéguǒ", en: "result / outcome", th: "ผลลัพธ์", pos: "noun" },
+                    { ch: "目的", py: "mùdì", en: "purpose / goal", th: "จุดประสงค์", pos: "noun" },
+                    { ch: "习惯", py: "xíguàn", en: "habit / to be used to", th: "ความเคยชิน/นิสัย", pos: "noun" },
+                    { ch: "变化", py: "biànhuà", en: "change / variation", th: "การเปลี่ยนแปลง", pos: "noun" },
+                    { ch: "错误", py: "cuòwù", en: "mistake / error", th: "ข้อผิดพลาด", pos: "noun" },
+                    { ch: "危险", py: "wēixiǎn", en: "danger", th: "อันตราย", pos: "noun" },
+                    { ch: "影响", py: "yǐngxiǎng", en: "influence / effect", th: "ผลกระทบ/อิทธิพล", pos: "noun" },
+                    { ch: "故事", py: "gùshi", en: "story", th: "เรื่องราว/นิทาน", pos: "noun" },
+                    { ch: "笑话", py: "xiàohua", en: "joke", th: "เรื่องตลก", pos: "noun" },
+                    { ch: "新闻", py: "xīnwén", en: "news", th: "ข่าว", pos: "noun" },
+                    { ch: "消息", py: "xiāoxi", en: "news / information", th: "ข่าวคราว", pos: "noun" },
+                    { ch: "知识", py: "zhīshi", en: "knowledge", th: "ความรู้", pos: "noun" },
+                    { ch: "法律", py: "fǎlǜ", en: "law", th: "กฎหมาย", pos: "noun" },
+                    { ch: "科学", py: "kēxué", en: "science", th: "วิทยาศาสตร์", pos: "noun" },
+                    { ch: "艺术", py: "yìshù", en: "art", th: "ศิลปะ", pos: "noun" },
+                    { ch: "社会", py: "shèhuì", en: "society", th: "สังคม", pos: "noun" },
+                    { ch: "世界", py: "shìjiè", en: "world", th: "โลก", pos: "noun" },
+                    { ch: "国家", py: "guójiā", en: "country / nation", th: "ประเทศ", pos: "noun" }
+                ]
+            },
+            {
+                category: "Advanced Action Verbs / กริยาการกระทำขั้นสูง",
+                icon: "🔨",
+                words: [
+                    { ch: "推", py: "tuī", en: "to push", th: "ผลัก", pos: "verb" },
+                    { ch: "拉", py: "lā", en: "to pull", th: "ดึง/ลาก", pos: "verb" },
+                    { ch: "拿", py: "ná", en: "to take / hold", th: "ถือ/หยิบ/เอา", pos: "verb" },
+                    { ch: "放", py: "fàng", en: "to put / place", th: "วาง/ปล่อย", pos: "verb" },
+                    { ch: "举", py: "jǔ", en: "to lift / raise", th: "ยก", pos: "verb" },
+                    { ch: "扔", py: "rēng", en: "to throw", th: "โยน/ทิ้ง", pos: "verb" },
+                    { ch: "抱", py: "bào", en: "to hug / embrace", th: "กอด/อุ้ม", pos: "verb" },
+                    { ch: "掉", py: "diào", en: "to drop / fall", th: "ตก/หล่น", pos: "verb" },
+                    { ch: "坏", py: "huài", en: "to break / go bad", th: "เสีย/พัง", pos: "verb" },
+                    { ch: "修", py: "xiū", en: "to repair / fix", th: "ซ่อม", pos: "verb" },
+                    { ch: "查", py: "chá", en: "to check / look up", th: "ตรวจสอบ/ค้นหา", pos: "verb" },
+                    { ch: "算", py: "suàn", en: "to calculate / count", th: "คำนวณ/นับว่า", pos: "verb" },
+                    { ch: "猜", py: "cāi", en: "to guess", th: "เดา", pos: "verb" },
+                    { ch: "骗", py: "piàn", en: "to deceive / cheat", th: "หลอกลวง", pos: "verb" },
+                    { ch: "赚", py: "zhuàn", en: "to earn / make a profit", th: "ได้กำไร/หาเงินได้", pos: "verb" },
+                    { ch: "保护", py: "bǎohù", en: "to protect", th: "ปกป้อง/คุ้มครอง", pos: "verb" },
+                    { ch: "发现", py: "fāxiàn", en: "to discover", th: "ค้นพบ", pos: "verb" },
+                    { ch: "发展", py: "fāzhǎn", en: "to develop", th: "พัฒนา", pos: "verb" },
+                    { ch: "举行", py: "jǔxíng", en: "to hold (a meeting/event)", th: "จัด(งาน/การประชุม)", pos: "verb" },
+                    { ch: "经过", py: "jīngguò", en: "to pass by / go through", th: "ผ่านไป/ผ่านกระบวนการ", pos: "verb" },
+                    { ch: "坚持", py: "jiānchí", en: "to persist / stick to", th: "ยืนหยัด/อดทนทำต่อ", pos: "verb" },
+                    { ch: "放弃", py: "fàngqì", en: "to give up", th: "ยอมแพ้/ละทิ้ง", pos: "verb" },
+                    { ch: "接受", py: "jiēshòu", en: "to accept", th: "ยอมรับ", pos: "verb" },
+                    { ch: "拒绝", py: "jùjué", en: "to refuse / reject", th: "ปฏิเสธ", pos: "verb" },
+                    { ch: "讨论", py: "tǎolùn", en: "to discuss", th: "อภิปราย/ถกเถียง", pos: "verb" },
+                    { ch: "解释", py: "jiěshì", en: "to explain", th: "อธิบาย", pos: "verb" },
+                    { ch: "怀疑", py: "huáiyí", en: "to doubt / suspect", th: "สงสัย", pos: "verb" }
+                ]
+            },
+            {
+                category: "Clothing, Accessories & Styling / เสื้อผ้าและเครื่องประดับ",
+                icon: "👗",
+                words: [
+                    { ch: "衬衫", py: "chènshān", en: "shirt", th: "เสื้อเชิ้ต", pos: "noun" },
+                    { ch: "T恤", py: "T-xù", en: "T-shirt", th: "เสื้อยืด", pos: "noun" },
+                    { ch: "牛仔裤", py: "niúzǎikù", en: "jeans", th: "กางเกงยีนส์", pos: "noun" },
+                    { ch: "外套", py: "wàitào", en: "coat / jacket", th: "เสื้อคลุม/เสื้อกันหนาว", pos: "noun" },
+                    { ch: "毛衣", py: "máoyī", en: "sweater", th: "เสื้อสเวตเตอร์", pos: "noun" },
+                    { ch: "内衣", py: "nèiyī", en: "underwear", th: "ชุดชั้น内", pos: "noun" },
+                    { ch: "皮鞋", py: "píxié", en: "leather shoes", th: "รองเท้าหนัง", pos: "noun" },
+                    { ch: "运动鞋", py: "yùndòngxié", en: "sneakers", th: "รองเท้าผ้าใบ", pos: "noun" },
+                    { ch: "拖鞋", py: "tuōxié", en: "slippers", th: "รองเท้าแตะ", pos: "noun" },
+                    { ch: "手套", py: "shǒutào", en: "gloves", th: "ถุงมือ", pos: "noun" },
+                    { ch: "围巾", py: "wéijīn", en: "scarf", th: "ผ้าพันคอ", pos: "noun" },
+                    { ch: "领带", py: "lǐngdài", en: "necktie", th: "เนกไท", pos: "noun" },
+                    { ch: "墨镜", py: "mòjìng", en: "sunglasses", th: "แว่นกันแดด", pos: "noun" },
+                    { ch: "戒指", py: "jièzhi", en: "ring", th: "แหวน", pos: "noun" },
+                    { ch: "耳环", py: "ěrhuán", en: "earrings", th: "ต่างหู", pos: "noun" },
+                    { ch: "项链", py: "xiàngliàn", en: "necklace", th: "สร้อยคอ", pos: "noun" },
+                    { ch: "香水", py: "xiāngshuǐ", en: "perfume", th: "น้ำหอม", pos: "noun" },
+                    { ch: "行李箱", py: "xínglǐxiāng", en: "suitcase", th: "กระเป๋าเดินทาง", pos: "noun" },
+                    { ch: "锁", py: "suǒ", en: "lock", th: "แม่กุญแจ", pos: "noun" }
+                ]
+            },
+            {
+                category: "Education & Academics / การศึกษาและวิชาการ",
+                icon: "🎓",
+                words: [
+                    { ch: "句子", py: "jùzi", en: "sentence", th: "ประโยค", pos: "noun" },
+                    { ch: "词语", py: "cíyǔ", en: "word / vocabulary", th: "คำศัพท์", pos: "noun" },
+                    { ch: "语法", py: "yǔfǎ", en: "grammar", th: "ไวยากรณ์", pos: "noun" },
+                    { ch: "笔记", py: "bǐjì", en: "notes", th: "สมุดจด/การจดโน้ต", pos: "noun" },
+                    { ch: "字典", py: "zìdiǎn", en: "dictionary", th: "พจนานุกรม", pos: "noun" },
+                    { ch: "橡皮", py: "xiàngpí", en: "eraser", th: "ยางลบ", pos: "noun" },
+                    { ch: "尺子", py: "chǐzi", en: "ruler", th: "ไม้บรรทัด", pos: "noun" },
+                    { ch: "杂志", py: "zázhì", en: "magazine", th: "นิตยสาร", pos: "noun" },
+                    { ch: "体育馆", py: "tǐyùguǎn", en: "gymnasium", th: "โรงยิม", pos: "noun" },
+                    { ch: "操场", py: "cāochǎng", en: "playground / sports field", th: "สนามเด็กเล่น/สนามกีฬา", pos: "noun" },
+                    { ch: "教授", py: "jiàoshòu", en: "professor", th: "ศาสตราจารย์", pos: "noun" },
+                    { ch: "校长", py: "xiàozhǎng", en: "principal / university president", th: "ครูใหญ่/อธิการบดี", pos: "noun" },
+                    { ch: "专业", py: "zhuānyè", en: "major / specialty", th: "วิชาเอก/สาขาวิชา", pos: "noun" },
+                    { ch: "物理", py: "wùlǐ", en: "physics", th: "ฟิสิกส์", pos: "noun" },
+                    { ch: "化学", py: "huàxué", en: "chemistry", th: "เคมี", pos: "noun" },
+                    { ch: "地理", py: "dìlǐ", en: "geography", th: "ภูมิศาสตร์", pos: "noun" }
+                ]
+            },
+            {
+                category: "Nature & Environment / ธรรมชาติและสิ่งแวดล้อม",
+                icon: "🌍",
+                words: [
+                    { ch: "地球", py: "dìqiú", en: "Earth", th: "โลก(ดาวเคราะห์)", pos: "noun" },
+                    { ch: "宇宙", py: "yǔzhòu", en: "universe", th: "จักรวาล", pos: "noun" },
+                    { ch: "空气", py: "kōngqì", en: "air", th: "อากาศ", pos: "noun" },
+                    { ch: "污染", py: "wūrǎn", en: "pollution", th: "มลพิษ", pos: "noun" },
+                    { ch: "环境", py: "huánjìng", en: "environment", th: "สิ่งแวดล้อม", pos: "noun" },
+                    { ch: "气候", py: "qìhòu", en: "climate", th: "ภูมิอากาศ", pos: "noun" },
+                    { ch: "温度", py: "wēndù", en: "temperature", th: "อุณหภูมิ", pos: "noun" },
+                    { ch: "森林", py: "sēnlín", en: "forest", th: "ป่าไม้", pos: "noun" },
+                    { ch: "沙漠", py: "shāmò", en: "desert", th: "ทะเลทราย", pos: "noun" },
+                    { ch: "岛", py: "dǎo", en: "island", th: "เกาะ", pos: "noun" },
+                    { ch: "湖", py: "hú", en: "lake", th: "ทะเลสาบ", pos: "noun" },
+                    { ch: "海滩", py: "hǎitān", en: "beach", th: "ชายหาด", pos: "noun" },
+                    { ch: "草地", py: "cǎodì", en: "lawn / meadow", th: "สนามหญ้า", pos: "noun" },
+                    { ch: "泥土", py: "nítǔ", en: "soil / dirt", th: "ดิน", pos: "noun" },
+                    { ch: "石头", py: "shítou", en: "stone / rock", th: "ก้อนหิน", pos: "noun" },
+                    { ch: "闪电", py: "shǎndiàn", en: "lightning", th: "ฟ้าแลบ", pos: "noun" },
+                    { ch: "雷", py: "léi", en: "thunder", th: "ฟ้าร้อง", pos: "noun" }
+                ]
+            }
+        ];
+
+        const commonWordsData = [...commonWordsData_Batch1, ...commonWordsData_Batch2, ...commonWordsData_Batch3, ...commonWordsData_Batch4];
+
         // --- FULL DATA SET (Lessons 1-15) with THAI ---
         const sentencePatternData = {
             "language_learning_syllabus": "Mandarin for Thai Speakers (Accelerated)",
@@ -4627,7 +5621,7 @@
         // New setTab function for main views
         function setTab(name) {
             // Hide all main views
-            const views = ['view-dashboard', 'view-lesson', 'view-story', 'view-pinyin', 'view-quiz', 'view-tone-drill', 'view-patterns'];
+            const views = ['view-dashboard', 'view-lesson', 'view-story', 'view-pinyin', 'view-quiz', 'view-tone-drill', 'view-patterns', 'view-words'];
             views.forEach(v => {
                 const el = document.getElementById(v);
                 if (el) el.classList.add('hidden');
@@ -4641,6 +5635,7 @@
                 'pinyin': 'nav-pinyin',
                 'quiz': 'nav-quiz',
                 'patterns': 'nav-patterns',
+                'words': 'nav-words',
                 'lesson': 'nav-dashboard',
                 'tone-drill': 'nav-dashboard'
             };
@@ -4670,6 +5665,9 @@
             } else if (name === 'patterns') {
                 document.getElementById('view-patterns').classList.remove('hidden');
                 renderPatterns();
+            } else if (name === 'words') {
+                document.getElementById('view-words').classList.remove('hidden');
+                renderCommonWords();
             } else if (name === 'tone-drill') {
                 document.getElementById('view-tone-drill').classList.remove('hidden');
             }
@@ -6361,6 +7359,48 @@
 
         // Backward compatibility if needed
         function toTone1(str) { return toTone(str, 1); }
+
+        // --- FREQUENCY WORDS ---
+        function renderCommonWords() {
+            const container = document.getElementById('words-container');
+            if (!container) return;
+
+            let html = `
+                <div class="syllabus-info animate-up" style="margin-bottom:20px; text-align:center">
+                    <h1 style="font-size:1.4rem; color:var(--primary)">1000 Most Common Words (All Batches: 1-1000)</h1>
+                    <p style="font-size:0.9rem; color:var(--text-secondary)">Essential vocabulary categorized by topic</p>
+                </div>
+            `;
+
+            commonWordsData.forEach(group => {
+                html += `
+                    <div class="pattern-group animate-up" style="margin-bottom: 30px;">
+                        <div class="pattern-group-title" style="font-size:1.2rem; display:flex; align-items:center; gap:10px;">
+                            ${group.icon} ${group.category} <span style="font-size:0.8rem; background:var(--primary); color:white; padding:2px 8px; border-radius:10px; margin-left:auto;">${group.words.length}</span>
+                        </div>
+                        <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:10px; margin-top:15px;">
+                `;
+
+                group.words.forEach(word => {
+                    html += `
+                            <div class="word-card animate-up" style="background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:15px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); position:relative; cursor:pointer; transition:transform 0.2s" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'" onclick="speak('${word.ch}')">
+                                <span style="position:absolute; top:8px; right:10px; font-size:0.65rem; color:var(--text-secondary); background:var(--bg); padding:2px 5px; border-radius:4px; border:1px solid var(--border);">${word.pos}</span>
+                                <div style="font-size:2.2rem; font-family:'KaiTi', serif; color:var(--primary); margin-bottom:5px;">${word.ch}</div>
+                                <div style="font-size:1rem; color:var(--text-secondary); margin-bottom:5px;">${word.py}</div>
+                                <div style="font-size:0.9rem; font-weight:bold; color:var(--text); margin-bottom:3px;">${word.en}</div>
+                                <div style="font-size:0.85rem; color:var(--text-secondary);">${word.th}</div>
+                            </div>
+                    `;
+                });
+
+                html += `
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
 
 
         // --- SENTENCE PATTERNS ---
