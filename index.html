@@ -7103,14 +7103,21 @@
             }
         }
 
+        let globalSpeechRecog = null;
+
         function checkPronunciation(targetText, btnElement) {
             if (!('webkitSpeechRecognition' in window)) {
-                alert("Speech Recognition not supported in this browser. Try Chrome.");
+                showToast("Speech Recognition not supported. Try Chrome or Edge.", true);
                 return;
             }
-            const recognition = new webkitSpeechRecognition();
-            recognition.lang = 'zh-CN';
-            recognition.start();
+
+            if (!globalSpeechRecog) {
+                globalSpeechRecog = new webkitSpeechRecognition();
+                globalSpeechRecog.lang = 'zh-CN';
+            }
+
+            // Abort any ongoing recognition before starting a new one
+            try { globalSpeechRecog.abort(); } catch (e) { }
 
             const originalHTML = btnElement.innerHTML;
             btnElement.innerHTML = "👂";
@@ -7119,26 +7126,28 @@
             // Simplify target by stripping punctuation
             const cleanTarget = targetText.replace(/[。？！，、；：“”‘’（）《》〈〉]/g, '').trim();
 
-            recognition.onresult = function (event) {
+            globalSpeechRecog.onresult = function (event) {
                 const transcript = event.results[0][0].transcript;
                 const cleanTranscript = transcript.replace(/[。？！，、；：“”‘’（）《》〈〉]/g, '').trim();
 
                 // Compare (fuzzy matching could be better, but we do exact substring or reverse substring)
                 if (cleanTranscript.includes(cleanTarget) || cleanTarget.includes(cleanTranscript)) {
-                    alert(`✅ Excellent!\nYou said: ${transcript}`);
+                    showToast(`✅ Excellent! You said: ${transcript}`, false);
                     awardXP(5);
                 } else if (cleanTranscript.length > 0) {
-                    alert(`❌ Not quite!\nYou said: ${transcript}\nTarget: ${targetText}`);
+                    showToast(`❌ Not quite! You said: ${transcript}`, true);
                 }
                 resetBtn();
             };
 
-            recognition.onerror = function (event) {
-                alert("Error: " + event.error);
+            globalSpeechRecog.onerror = function (event) {
+                if (event.error !== 'aborted') {
+                    showToast("Microphone Error: " + event.error, true);
+                }
                 resetBtn();
             };
 
-            recognition.onend = function () {
+            globalSpeechRecog.onend = function () {
                 resetBtn();
             };
 
@@ -7146,7 +7155,33 @@
                 btnElement.innerHTML = originalHTML;
                 btnElement.style.background = "#f44336";
             }
+
+            try {
+                globalSpeechRecog.start();
+            } catch (e) {
+                // If it was already started
+                resetBtn();
+            }
         }
+
+        function showToast(msg, isError = false) {
+            let toast = document.getElementById('app-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'app-toast';
+                toast.style.cssText = 'position:fixed; bottom:-100px; left:50%; transform:translateX(-50%); padding:12px 24px; border-radius:30px; color:white; font-weight:bold; z-index:10000; box-shadow:0 10px 30px rgba(0,0,0,0.5); transition:bottom 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); min-width:250px; text-align:center;';
+                document.body.appendChild(toast);
+            }
+            toast.style.background = isError ? 'var(--danger)' : 'var(--success)';
+            toast.innerText = msg;
+            toast.style.bottom = '20px';
+
+            if (toast.timeoutId) clearTimeout(toast.timeoutId);
+            toast.timeoutId = setTimeout(() => {
+                toast.style.bottom = '-100px';
+            }, 3500);
+        }
+
 
         // 3. Stroke Order Animation (Mock)
         function animateStrokeOrder() {
