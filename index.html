@@ -1388,114 +1388,113 @@
 
 
         <!-- Quiz Tab Removed -->
-    </div>
-    </div>
 
-    <!-- QUIZ VIEW (New Top Level) -->
-    <div id="view-quiz" class="hidden">
-        <div class="header-bar">
-            <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem">⬅️</button>
-            <h2>Quiz Mode / แบบทดสอบ</h2>
-            <div style="width:30px"></div>
-        </div>
-
-        <div id="quiz-setup" style="text-align:center; padding-top:20px;">
-            <div style="font-size:4rem; margin-bottom:20px">🎓</div>
-            <h2 style="margin-bottom:10px">Select Quiz Mode</h2>
-
-            <div style="display:flex; justify-content:center; gap:20px; margin-bottom:30px">
-                <label
-                    style="background:var(--card-bg); padding:15px; border-radius:10px; border:2px solid var(--primary); cursor:pointer">
-                    <input type="radio" name="quiz-mode" value="cumulative" checked onchange="renderQuizLessonList()">
-                    <b>Cumulative</b><br><span style="font-size:0.8rem">Test up to selected lesson</span>
-                </label>
-                <label
-                    style="background:var(--card-bg); padding:15px; border-radius:10px; border:2px solid #555; cursor:pointer">
-                    <input type="radio" name="quiz-mode" value="single" onchange="renderQuizLessonList()">
-                    <b>Single Lesson</b><br><span style="font-size:0.8rem">Test only selected lesson</span>
-                </label>
+        <!-- QUIZ VIEW (New Top Level) -->
+        <div id="view-quiz" class="hidden">
+            <div class="header-bar">
+                <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem">⬅️</button>
+                <h2>Quiz Mode / แบบทดสอบ</h2>
+                <div style="width:30px"></div>
             </div>
 
-            <label
-                style="display:inline-block; margin-bottom:20px; font-size:1rem; padding:10px; background:var(--card-bg); border-radius:8px; box-shadow:var(--shadow)">
-                <input type="checkbox" id="hardcore-mode" style="transform:scale(1.2); margin-right:8px;"> ☠️
-                <b>Hardcore Mode</b> (Type Pinyin)
-            </label>
+            <div id="quiz-setup" style="text-align:center; padding-top:20px;">
+                <div style="font-size:4rem; margin-bottom:20px">🎓</div>
+                <h2 style="margin-bottom:10px">Select Quiz Mode</h2>
 
-            <div id="quiz-lesson-list" style="max-height: 50vh; overflow-y: auto; padding:10px;">
-                <!-- Buttons generated here -->
-            </div>
-        </div>
-
-        <div id="quiz-active" class="hidden" style="padding:20px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <div style="font-weight:bold; color:var(--text)">
-                    <span id="q-progress">Question 1 / 20</span><br>
-                    <span id="q-score" style="color:var(--success); font-size:0.9rem">Score: 0</span>
+                <div style="display:flex; justify-content:center; gap:20px; margin-bottom:30px">
+                    <label
+                        style="background:var(--card-bg); padding:15px; border-radius:10px; border:2px solid var(--primary); cursor:pointer">
+                        <input type="radio" name="quiz-mode" value="cumulative" checked
+                            onchange="renderQuizLessonList()">
+                        <b>Cumulative</b><br><span style="font-size:0.8rem">Test up to selected lesson</span>
+                    </label>
+                    <label
+                        style="background:var(--card-bg); padding:15px; border-radius:10px; border:2px solid #555; cursor:pointer">
+                        <input type="radio" name="quiz-mode" value="single" onchange="renderQuizLessonList()">
+                        <b>Single Lesson</b><br><span style="font-size:0.8rem">Test only selected lesson</span>
+                    </label>
                 </div>
+
+                <label
+                    style="display:inline-block; margin-bottom:20px; font-size:1rem; padding:10px; background:var(--card-bg); border-radius:8px; box-shadow:var(--shadow)">
+                    <input type="checkbox" id="hardcore-mode" style="transform:scale(1.2); margin-right:8px;"> ☠️
+                    <b>Hardcore Mode</b> (Type Pinyin)
+                </label>
+
+                <div id="quiz-lesson-list" style="max-height: 50vh; overflow-y: auto; padding:10px;">
+                    <!-- Buttons generated here -->
+                </div>
+            </div>
+
+            <div id="quiz-active" class="hidden" style="padding:20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <div style="font-weight:bold; color:var(--text)">
+                        <span id="q-progress">Question 1 / 20</span><br>
+                        <span id="q-score" style="color:var(--success); font-size:0.9rem">Score: 0</span>
+                    </div>
+                    <button onclick="quitQuiz()"
+                        style="background:rgba(255,255,255,0.1); border:none; width:36px; height:36px; border-radius:50%; color:var(--text); font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+                </div>
+                <div
+                    style="width:100%; height:6px; background:#333; border-radius:3px; margin-bottom:20px; overflow:hidden">
+                    <div id="q-bar" style="width:0%; height:100%; background:var(--primary); transition:width 0.3s">
+                    </div>
+                </div>
+                <div id="quiz-header-info"
+                    style="text-align:center; margin-bottom:10px; font-weight:bold; color:var(--primary)"></div>
+                <div id="quiz-container"></div>
                 <button onclick="quitQuiz()"
-                    style="background:rgba(255,255,255,0.1); border:none; width:36px; height:36px; border-radius:50%; color:var(--text); font-size:1.2rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+                    style="margin-top:20px; background:transparent; border:1px solid #555; color:var(--text); padding:8px 16px; border-radius:20px">Quit
+                    Quiz</button>
             </div>
-            <div
-                style="width:100%; height:6px; background:#333; border-radius:3px; margin-bottom:20px; overflow:hidden">
-                <div id="q-bar" style="width:0%; height:100%; background:var(--primary); transition:width 0.3s">
+
+            <div id="quiz-result" class="hidden" style="text-align:center; padding-top:60px;">
+                <div style="font-size:5rem; margin-bottom:20px">🎉</div>
+                <h2>Quiz Complete!</h2>
+                <div id="quiz-final-score" style="font-size:4rem; margin:20px 0; color:var(--primary); font-weight:900">
                 </div>
+                <div id="quiz-xp-gain" style="font-size:1.2rem; margin-bottom:20px; color:#ff9800"></div>
+                <button class="srs-btn btn-good" onclick="openQuizMenu()">Back to Menu</button>
+                <button class="srs-btn btn-again" onclick="goHome()"
+                    style="margin-top:10px; background:transparent; border:1px solid #555; color:var(--text)">Home</button>
             </div>
-            <div id="quiz-header-info"
-                style="text-align:center; margin-bottom:10px; font-weight:bold; color:var(--primary)"></div>
-            <div id="quiz-container"></div>
-            <button onclick="quitQuiz()"
-                style="margin-top:20px; background:transparent; border:1px solid #555; color:var(--text); padding:8px 16px; border-radius:20px">Quit
-                Quiz</button>
         </div>
 
-        <div id="quiz-result" class="hidden" style="text-align:center; padding-top:60px;">
-            <div style="font-size:5rem; margin-bottom:20px">🎉</div>
-            <h2>Quiz Complete!</h2>
-            <div id="quiz-final-score" style="font-size:4rem; margin:20px 0; color:var(--primary); font-weight:900">
+        <!-- STORY MODE VIEW -->
+        <div id="view-story" class="hidden">
+            <div class="header-bar">
+                <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem">⬅️</button>
+                <h2>Story Mode / นิทาน</h2>
+                <div style="width:30px"></div>
             </div>
-            <div id="quiz-xp-gain" style="font-size:1.2rem; margin-bottom:20px; color:#ff9800"></div>
-            <button class="srs-btn btn-good" onclick="openQuizMenu()">Back to Menu</button>
-            <button class="srs-btn btn-again" onclick="goHome()"
-                style="margin-top:10px; background:transparent; border:1px solid #555; color:var(--text)">Home</button>
+            <div id="story-list" style="padding:20px;"></div>
+            <div id="story-reader" class="hidden" style="padding:20px;"></div>
         </div>
-    </div>
 
-    <!-- STORY MODE VIEW -->
-    <div id="view-story" class="hidden">
-        <div class="header-bar">
-            <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem">⬅️</button>
-            <h2>Story Mode / นิทาน</h2>
-            <div style="width:30px"></div>
+        <!-- PINYIN CHART VIEW -->
+        <div id="view-pinyin" class="hidden">
+            <div class="header-bar">
+                <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem">⬅️</button>
+                <h2>Pinyin Chart / พินอิน</h2>
+                <div style="width:30px"></div>
+            </div>
+            <div class="pinyin-scroll-container" style="overflow-x:auto; padding:10px;">
+                <div id="pinyin-grid" class="pinyin-grid"></div>
+            </div>
         </div>
-        <div id="story-list" style="padding:20px;"></div>
-        <div id="story-reader" class="hidden" style="padding:20px;"></div>
-    </div>
 
-    <!-- PINYIN CHART VIEW -->
-    <div id="view-pinyin" class="hidden">
-        <div class="header-bar">
-            <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem">⬅️</button>
-            <h2>Pinyin Chart / พินอิน</h2>
-            <div style="width:30px"></div>
+        <!-- SENTENCE PATTERN VIEW -->
+        <div id="view-patterns" class="hidden">
+            <div class="header-bar">
+                <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem">⬅️</button>
+                <h2>Sentence Patterns / รูปประโยค</h2>
+                <div style="width:30px"></div>
+            </div>
+            <div id="patterns-container" style="padding:20px; padding-bottom:100px;">
+                <!-- Groups will be rendered here -->
+            </div>
         </div>
-        <div class="pinyin-scroll-container" style="overflow-x:auto; padding:10px;">
-            <div id="pinyin-grid" class="pinyin-grid"></div>
-        </div>
-    </div>
-    </div>
-
-    <!-- SENTENCE PATTERN VIEW -->
-    <div id="view-patterns" class="hidden">
-        <div class="header-bar">
-            <button onclick="goHome()" style="background:none; border:none; font-size:1.5rem">⬅️</button>
-            <h2>Sentence Patterns / รูปประโยค</h2>
-            <div style="width:30px"></div>
-        </div>
-        <div id="patterns-container" style="padding:20px; padding-bottom:100px;">
-            <!-- Groups will be rendered here -->
-        </div>
-    </div>
+    </div> <!-- Closes app-container -->
 
     <button class="fab hidden" id="fab-home" onclick="goHome()">🏠</button>
     <div class="offline-badge">⚡ Offline Ready</div>
