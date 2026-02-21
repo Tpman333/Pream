@@ -3928,7 +3928,7 @@
 
         const UI = {
             en: { vocab: "Words", text: "Text", dialogue: "Dialogue", practice: "Practice", grammar: "Grammar", cards: "Cards", quiz: "Quiz", settings: "Settings", close: "Close", export: "Export", import: "Import", review: "Review Now", toggleWriting: "Toggle Writing", play: "Play", startQuiz: "Start Quiz", finish: "Finish", hardcore: "Hardcore Mode", search: "Search...", autoAudio: "Auto-Audio", voice: "Preferred Voice", speed: "Speed", dark: "Dark Mode", blur: "Hide Pinyin", lang: "Language", story: "Story" },
-            th: { vocab: "คำศัพท์", text: "บทเรียน", dialogue: "สนทนา", practice: "ฝึกแต่งประโยค", grammar: "ไวยากรณ์", cards: "การ์ด", quiz: "ทดสอบ", settings: "ตั้งค่า", close: "ปิด", export: "ส่งออกข้อมูล", import: "นำเข้าข้อมูล", review: "ทบทวนเดี๋ยวนี้", toggleWriting: "เขียนอักษร", play: "เล่นเสียง", startQuiz: "เริ่มทดสอบ", finish: "เสร็จสิ้น", hardcore: "โหมดสุดโหด (พิมพ์ตอบ)", search: "ค้นหา...", autoAudio: "เล่นเสียงอัตโนมัติ", voice: "เสียงอ่าน", speed: "ความเร็ว", dark: "โหมดมืด", blur: "ซ่อนพินอิน", lang: "ภาษา", story: "นิทาน" }
+            th: { vocab: "คำศัพท์", text: "บทเรียน", dialogue: "สนทนา", practice: "ฝึกแต่งประโยค", grammar: "ไวยกรณ์", cards: "Flashcard", quiz: "ทดสอบ", settings: "ตั้งค่า", close: "ปิด", export: "ส่งออกข้อมูล", import: "นำเข้าข้อมูล", review: "ทบทวนเดี๋ยวนี้", toggleWriting: "เขียนอักษร", play: "เล่นเสียง", startQuiz: "เริ่มทดสอบ", finish: "เสร็จสิ้น", hardcore: "โหมดสุดโหด (พิมพ์ตอบ)", search: "ค้นหา...", autoAudio: "เล่นเสียงอัตโนมัติ", voice: "เสียงอ่าน", speed: "ความเร็ว", dark: "โหมดมืด", blur: "ซ่อนพินอิน", lang: "ภาษา", story: "นิทาน" }
         };
 
 
@@ -4074,8 +4074,8 @@
                 if (tabs[1]) tabs[1].innerText = txt.text;
                 if (tabs[2]) tabs[2].innerText = txt.dialogue;
                 if (tabs[3]) tabs[3].innerText = txt.practice;
-                if (tabs[4]) tabs[4].innerText = txt.cards;
-                if (tabs[5]) tabs[5].innerText = txt.quiz;
+                if (tabs[4]) tabs[4].innerText = txt.grammar;
+                if (tabs[5]) tabs[5].innerText = txt.cards;
             }
 
             const elWords = document.getElementById('lbl-words');
