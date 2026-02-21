@@ -5250,6 +5250,7 @@
             stats: { streak: 0, lastDate: null, xp: 0, level: 1, heatmap: {} },
             mistakes: [],
             srs: {},
+            commonWordsProgress: {},
             settings: { dark: true, blur: false, speed: 1.0, voiceURI: '', lang: 'th' }
         };
         let currentLesson = null;
@@ -5352,6 +5353,7 @@
 
                 if (!state.stats.xp) state.stats.xp = 0;
                 if (!state.stats.level) state.stats.level = 1;
+                if (!state.commonWordsProgress) state.commonWordsProgress = {};
 
                 if (parsed.settings) {
                     state.settings = { ...defaultSettings, ...parsed.settings };
@@ -5431,9 +5433,10 @@
             if (document.getElementById('dash-xp')) document.getElementById('dash-xp').innerText = state.stats.xp || 0;
 
             // Calculate Total Words
-            // Assuming state.srs stores mastery
+            // Assuming state.srs stores mastery + common words
             const masteredIds = Object.keys(state.srs).filter(k => state.srs[k].lvl >= 3);
-            if (document.getElementById('dash-words')) document.getElementById('dash-words').innerText = masteredIds.length;
+            const commonLearned = Object.keys(state.commonWordsProgress || {}).length;
+            if (document.getElementById('dash-words')) document.getElementById('dash-words').innerText = masteredIds.length + commonLearned;
 
             // Hero Card Highlighting Current Lesson
             const currentLessonId = state.currentLessonId;
@@ -5442,12 +5445,15 @@
             // Calculate progress for current lesson
             let lessonProgress = 0;
             let totalItems = currentLesson.words.length;
-            let masteredItems = 0;
+            let masteryScore = 0;
             currentLesson.words.forEach((w, idx) => {
                 const key = `${currentLesson.id}-${idx}`;
-                if (state.srs[key] && state.srs[key].lvl >= 3) masteredItems++;
+                if (state.srs[key]) {
+                    // Fractional progress: level 1 = 33%, 2 = 66%, 3+ = 100%
+                    masteryScore += Math.min(3, state.srs[key].lvl) / 3;
+                }
             });
-            if (totalItems > 0) lessonProgress = Math.round((masteredItems / totalItems) * 100);
+            if (totalItems > 0) lessonProgress = Math.round((masteryScore / totalItems) * 100);
 
             if (document.getElementById('hero-title')) document.getElementById('hero-title').innerText = `Lesson ${currentLesson.id}: ${currentLesson.titleEn}`;
             if (document.getElementById('hero-progress')) document.getElementById('hero-progress').style.width = `${lessonProgress}%`;
@@ -6144,6 +6150,24 @@
             if (sel === cor) {
                 btn.classList.add('correct');
                 quizScore++;
+
+                // Add Mastery points for Quiz
+                const q = quizPool[quizIndex];
+                if (q && q.target && q.target.lessonId) {
+                    const lId = q.target.lessonId;
+                    const l = lessons.find(lx => lx.id === lId);
+                    if (l) {
+                        const wIdx = l.words.findIndex(w => w.ch === q.target.ch);
+                        if (wIdx !== -1) {
+                            const key = `${lId}-${wIdx}`;
+                            if (!state.srs[key]) state.srs[key] = { lvl: 0 };
+                            state.srs[key].lvl += 1;
+                            awardXP(2);
+                            saveState();
+                        }
+                    }
+                }
+
                 // Play correct sound
             } else {
                 btn.classList.add('wrong');
@@ -7382,8 +7406,14 @@
                 `;
 
                 group.words.forEach(word => {
+                    const isLearned = state.commonWordsProgress && state.commonWordsProgress[word.ch];
+                    const borderStyle = isLearned ? 'border: 2px solid var(--primary);' : 'border: 1px solid var(--border);';
+                    const bgStyle = isLearned ? 'background: var(--bg); opacity: 0.8;' : 'background: var(--card-bg);';
+                    const checkMark = isLearned ? `<div style="position:absolute; top:8px; left:10px; color:var(--primary); font-size:1.1rem; font-weight:bold;">✓</div>` : '';
+
                     html += `
-                            <div class="word-card animate-up" style="background:var(--card-bg); border:1px solid var(--border); border-radius:12px; padding:15px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); position:relative; cursor:pointer; transition:transform 0.2s" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'" onclick="speak('${word.ch}')">
+                            <div id="cw-card-${word.ch}" class="word-card animate-up" style="${bgStyle} ${borderStyle} border-radius:12px; padding:15px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); position:relative; cursor:pointer; transition:all 0.2s" onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'" onclick="markCommonWordLearned(this, '${word.ch}')">
+                                ${checkMark}
                                 <span style="position:absolute; top:8px; right:10px; font-size:0.65rem; color:var(--text-secondary); background:var(--bg); padding:2px 5px; border-radius:4px; border:1px solid var(--border);">${word.pos}</span>
                                 <div style="font-size:2.2rem; font-family:'KaiTi', serif; color:var(--primary); margin-bottom:5px;">${word.ch}</div>
                                 <div style="font-size:1rem; color:var(--text-secondary); margin-bottom:5px;">${word.py}</div>
@@ -7400,6 +7430,30 @@
             });
 
             container.innerHTML = html;
+        }
+
+        function markCommonWordLearned(el, ch) {
+            speak(ch);
+            checkStreak(); // Keep streak updated
+
+            if (!state.commonWordsProgress) state.commonWordsProgress = {};
+
+            if (!state.commonWordsProgress[ch]) {
+                // Mark as learned for the first time
+                state.commonWordsProgress[ch] = true;
+                awardXP(2); // Give 2 XP per word learned
+
+                // Update visuals explicitly so we don't have to re-render the whole list
+                el.style.border = '2px solid var(--primary)';
+                el.style.background = 'var(--bg)';
+                el.style.opacity = '0.8';
+
+                // Add checkmark if it doesn't exist
+                if (!el.innerHTML.includes('✓')) {
+                    el.insertAdjacentHTML('afterbegin', `<div style="position:absolute; top:8px; left:10px; color:var(--primary); font-size:1.1rem; font-weight:bold;">✓</div>`);
+                }
+                saveState();
+            }
         }
 
 
