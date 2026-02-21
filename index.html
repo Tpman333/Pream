@@ -1969,8 +1969,351 @@
                             ]
                         }
                     ]
+                },
+                {
+                    "group_id": 3,
+                    "group_name": "Paired Conjunctions (Compound Sentences)",
+                    "patterns": [
+                        {
+                            "pattern_id": 21,
+                            "structure": "因为 (yīnwèi) ... 所以 (suǒyǐ) ...",
+                            "thai_logic": "เพราะ(ว่า) ... ก็เลย/จึง ...",
+                            "explanation": "Cause and effect. Unlike English (which drops 'so' if 'because' is used), Chinese perfectly mirrors Thai by requiring both 'because' and 'so' in the sentence.",
+                            "examples": [
+                                { "zh": "因为下雨，所以我没去。", "pinyin": "Yīnwèi xiàyǔ, suǒyǐ wǒ méi qù.", "th": "เพราะว่าฝนตก ฉันก็เลยไม่ได้ไป" },
+                                { "zh": "因为他很忙，所以没来。", "pinyin": "Yīnwèi tā hěn máng, suǒyǐ méi lái.", "th": "เพราะเขาบ쁜มาก จึงไม่ได้มา" },
+                                { "zh": "因为太贵了，所以我不买。", "pinyin": "Yīnwèi tài guì le, suǒyǐ wǒ bù mǎi.", "th": "เพราะว่าแพงเกินไป ฉันก็เลยไม่ซื้อ" },
+                                { "zh": "因为天气很好，所以我们去公园。", "pinyin": "Yīnwèi tiānqì hěn hǎo, suǒyǐ wǒmen qù gōngyuán.", "th": "เพราะอากาศดีมาก พวกเราจึงไปสวนสาธารณะ" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 22,
+                            "structure": "虽然 (suīrán) ... 但是 (dànshì) ...",
+                            "thai_logic": "ถึงแม้(ว่า) ... แต่(ว่า) ...",
+                            "explanation": "Expressing contradiction. Just like Thai, you must use both 'Although' and 'But' to connect the two clauses.",
+                            "examples": [
+                                { "zh": "虽然我很累，但是我很高兴。", "pinyin": "Suīrán wǒ hěn lèi, dànshì wǒ hěn gāoxìng.", "th": "ถึงแม้ฉันจะเหนื่อยมาก แต่ฉันก็มีความสุขมาก" },
+                                { "zh": "虽然他没钱，但是他很努力。", "pinyin": "Suīrán tā méi qián, dànshì tā hěn nǔlì.", "th": "ถึงแม้เขาจะไม่มีเงิน แต่เขาก็ขยันมาก" },
+                                { "zh": "虽然中文很难，但是很有意思。", "pinyin": "Suīrán Zhōngwén hěn nán, dànshì hěn yǒu yìsi.", "th": "ถึงแม้ภาษาจีนจะยาก แต่ก็สนุกมาก" },
+                                { "zh": "虽然下雨，但是我们还要去。", "pinyin": "Suīrán xiàyǔ, dànshì wǒmen hái yào qù.", "th": "ถึงแม้ฝนจะตก แต่พวกเราก็ยังจะไป" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 23,
+                            "structure": "如果 (rúguǒ) ... 就 (jiù) ...",
+                            "thai_logic": "ถ้า(หาก) ... ก็(จะ) ...",
+                            "explanation": "Hypothesis and result. Note that 'jiù' (ก็) must be placed directly before the verb in the second clause, exactly like Thai.",
+                            "examples": [
+                                { "zh": "如果明天下雨，我就不去。", "pinyin": "Rúguǒ míngtiān xiàyǔ, wǒ jiù bú qù.", "th": "ถ้าพรุ่งนี้ฝนตก ฉันก็จะไม่ไป" },
+                                { "zh": "如果你喜欢，我就买给你。", "pinyin": "Rúguǒ nǐ xǐhuan, wǒ jiù mǎi gěi nǐ.", "th": "ถ้าคุณชอบ ฉันก็จะซื้อให้คุณ" },
+                                { "zh": "如果有时间，我们就去吃泰国菜。", "pinyin": "Rúguǒ yǒu shíjiān, wǒmen jiù qù chī Tàiguó cài.", "th": "ถ้ามีเวลา พวกเราก็จะไปกินอาหารไทย" },
+                                { "zh": "如果你不知道，就可以问老师。", "pinyin": "Rúguǒ nǐ bù zhīdào, jiù kěyǐ wèn lǎoshī.", "th": "ถ้าคุณไม่รู้ ก็สามารถถามอาจารย์ได้" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 24,
+                            "structure": "不但 (búdàn) ... 而且 (érqiě) ...",
+                            "thai_logic": "ไม่เพียงแต่ ... แถมยัง/อีกด้วย ...",
+                            "explanation": "Adding further information. Used to emphasize that two qualities or actions exist together.",
+                            "examples": [
+                                { "zh": "他不但聪明，而且很努力。", "pinyin": "Tā búdàn cōngming, érqiě hěn nǔlì.", "th": "เขาไม่เพียงแต่ฉลาด แถมยังขยันอีกด้วย" },
+                                { "zh": "这个手机不但好看，而且很便宜。", "pinyin": "Zhège shǒujī búdàn hǎokàn, érqiě hěn piányi.", "th": "มือถือเครื่องนี้ไม่เพียงแต่ดูดี แถมยังราคาถูกอีกด้วย" },
+                                { "zh": "我不但认识他，而且认识他的家人。", "pinyin": "Wǒ búdàn rènshi tā, érqiě rènshi tā de jiārén.", "th": "ฉันไม่เพียงแต่รู้จักเขา แถมยังรู้จักครอบครัวเขาด้วย" },
+                                { "zh": "这家饭馆不但菜好吃，而且服务很好。", "pinyin": "Zhè jiā fànguǎn búdàn cài hǎochī, érqiě fúwù hěn hǎo.", "th": "ร้านอาหารนี้ไม่เพียงแต่อาหารอร่อย แถมบริการยังดีอีกด้วย" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 25,
+                            "structure": "一 (yī) + [Action 1] + 就 (jiù) + [Action 2]",
+                            "thai_logic": "พอ ... ก็ ... (ทันที)",
+                            "explanation": "Immediate sequence of events. Expresses that as soon as Action 1 happens, Action 2 immediately follows. Very natural in Thai.",
+                            "examples": [
+                                { "zh": "我一下班就回家。", "pinyin": "Wǒ yí xiàbān jiù huíjiā.", "th": "ฉันพอเลิกงานก็กลับบ้านเลย" },
+                                { "zh": "他一喝啤酒就头疼。", "pinyin": "Tā yì hē píjiǔ jiù tóuténg.", "th": "เขาพอดื่มเบียร์ก็ปวดหัวทันที" },
+                                { "zh": "老师一说，我就懂了。", "pinyin": "Lǎoshī yì shuō, wǒ jiù dǒng le.", "th": "อาจารย์พอพูดปุ๊บ ฉันก็เข้าใจปั๊บ" },
+                                { "zh": "我一吃完饭就睡觉。", "pinyin": "Wǒ yì chī wán fàn jiù shuìjiào.", "th": "ฉันพอกินข้าวเสร็จก็นอนเลย" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 26,
+                            "structure": "越来越 (yuè lái yuè) + [Adjective]",
+                            "thai_logic": "นับวันยิ่ง ... / ...ขึ้นเรื่อยๆ",
+                            "explanation": "Indicates a progressive change over time. Do not add '很' (hěn) after 'yuè lái yuè'.",
+                            "examples": [
+                                { "zh": "天气越来越热了。", "pinyin": "Tiānqì yuè lái yuè rè le.", "th": "อากาศนับวันยิ่งร้อนขึ้นเรื่อยๆ" },
+                                { "zh": "你的中文越来越好了。", "pinyin": "Nǐ de Zhōngwén yuè lái yuè hǎo le.", "th": "ภาษาจีนของคุณดีขึ้นเรื่อยๆ แล้วนะ" },
+                                { "zh": "东西越来越贵了。", "pinyin": "Dōngxi yuè lái yuè guì le.", "th": "ของแพงขึ้นเรื่อยๆ แล้ว" },
+                                { "zh": "我越来越喜欢他。", "pinyin": "Wǒ yuè lái yuè xǐhuan tā.", "th": "ฉันนับวันยิ่งชอบเขามากขึ้นเรื่อยๆ" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "group_id": 4,
+                    "group_name": "Comparisons & Equality",
+                    "patterns": [
+                        {
+                            "pattern_id": 27,
+                            "structure": "A + 比 (bǐ) + B + [Adjective]",
+                            "thai_logic": "A ... กว่า B (A เทียบกับ B แล้ว...)",
+                            "explanation": "CRUCIAL DIFFERENCE: In Thai, the adjective comes before 'than' (ใหญ่กว่า). In Chinese, 'bǐ' (than) comes BEFORE the adjective. Think of it as 'A, compared to B, is [Adjective]'.",
+                            "examples": [
+                                { "zh": "我比他高。", "pinyin": "Wǒ bǐ tā gāo.", "th": "ฉันสูงกว่าเขา" },
+                                { "zh": "今天比昨天热。", "pinyin": "Jīntiān bǐ zuótiān rè.", "th": "วันนี้ร้อนกว่าเมื่อวาน" },
+                                { "zh": "泰国菜比中国菜辣。", "pinyin": "Tàiguó cài bǐ Zhōngguó cài là.", "th": "อาหารไทยเผ็ดกว่าอาหารจีน" },
+                                { "zh": "坐飞机比坐火车快。", "pinyin": "Zuò fēijī bǐ zuò huǒchē kuài.", "th": "นั่งเครื่องบินเร็วกว่านั่งรถไฟ" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 28,
+                            "structure": "A + 没有 (méiyǒu) + B + [Adjective]",
+                            "thai_logic": "A ไม่...เท่า B",
+                            "explanation": "To say A is less than B, Chinese uses 'méiyǒu' (not have). Think of it as 'A does not have B's level of [Adjective]'.",
+                            "examples": [
+                                { "zh": "他没有我高。", "pinyin": "Tā méiyǒu wǒ gāo.", "th": "เขาไม่สูงเท่าฉัน" },
+                                { "zh": "这里没有曼谷热。", "pinyin": "Zhèlǐ méiyǒu Màngǔ rè.", "th": "ที่นี่ไม่ร้อนเท่ากรุงเทพฯ" },
+                                { "zh": "我的手机没有你的贵。", "pinyin": "Wǒ de shǒujī méiyǒu nǐ de guì.", "th": "มือถือของฉันไม่แพงเท่าของคุณ" },
+                                { "zh": "今天没有昨天冷。", "pinyin": "Jīntiān méiyǒu zuótiān lěng.", "th": "วันนี้ไม่หนาวเท่าเมื่อวาน" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 29,
+                            "structure": "A + 跟/和 (gēn/hé) + B + 一样 (yíyàng)",
+                            "thai_logic": "A กับ B ... เหมือนกัน",
+                            "explanation": "Used to express equality. Maps perfectly to Thai logic 'A kab B meuan-gan'.",
+                            "examples": [
+                                { "zh": "我跟他一样大。", "pinyin": "Wǒ gēn tā yíyàng dà.", "th": "ฉันกับเขาอายุเท่ากัน (โตเหมือนกัน)" },
+                                { "zh": "你的衣服和我的衣服一样。", "pinyin": "Nǐ de yīfu hé wǒ de yīfu yíyàng.", "th": "เสื้อของคุณกับเสื้อของฉันเหมือนกัน" },
+                                { "zh": "这本词典跟那本一样贵。", "pinyin": "Zhè běn cídiǎn gēn nà běn yíyàng guì.", "th": "พจนานุกรมเล่มนี้แพงเท่ากับเล่มนั้น" },
+                                { "zh": "她的眼睛跟妈妈一样漂亮。", "pinyin": "Tā de yǎnjing gēn māma yíyàng piàoliang.", "th": "ตาของเธอสวยเหมือนกับแม่" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "group_id": 5,
+                    "group_name": "Advanced Time & Sequence",
+                    "patterns": [
+                        {
+                            "pattern_id": 30,
+                            "structure": "先 (xiān) ... 然后 (ránhòu) ...",
+                            "thai_logic": "(ทำ) ... ก่อน แล้วค่อย ...",
+                            "explanation": "Expresses a sequence of actions. Very similar to Thai, indicating what to do first, and what to do next.",
+                            "examples": [
+                                { "zh": "我们先吃饭，然后看电影。", "pinyin": "Wǒmen xiān chīfàn, ránhòu kàn diànyǐng.", "th": "พวกเรากินข้าวก่อน แล้วค่อยดูหนัง" },
+                                { "zh": "你先洗手，然后再吃。", "pinyin": "Nǐ xiān xǐshǒu, ránhòu zài chī.", "th": "คุณล้างมือก่อน แล้วค่อยกิน" },
+                                { "zh": "我先回酒店，然后去找你。", "pinyin": "Wǒ xiān huí jiǔdiàn, ránhòu qù zhǎo nǐ.", "th": "ฉันกลับโรงแรมก่อน แล้วค่อยไปหาคุณ" },
+                                { "zh": "老师先读，然后我们读。", "pinyin": "Lǎoshī xiān dú, ránhòu wǒmen dú.", "th": "อาจารย์อ่านก่อน แล้วพวกเราค่อยอ่าน" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 31,
+                            "structure": "一边 (yìbiān) ... 一边 (yìbiān) ...",
+                            "thai_logic": "ทำ...ไปพร้อมกับทำ... / ...ไปพลาง...ไปพลาง",
+                            "explanation": "Indicates two actions happening simultaneously. Placed directly before the verbs.",
+                            "examples": [
+                                { "zh": "我们一边喝茶，一边聊天。", "pinyin": "Wǒmen yìbiān hēchá, yìbiān liáotiān.", "th": "พวกเราดื่มชาไปพลาง คุยกันไปพลาง" },
+                                { "zh": "他喜欢一边洗澡一边唱歌。", "pinyin": "Tā xǐhuan yìbiān xǐzǎo yìbiān chànggē.", "th": "เขาชอบอาบน้ำไปร้องเพลงไป" },
+                                { "zh": "不要一边吃饭一边看手机。", "pinyin": "Bú yào yìbiān chīfàn yìbiān kàn shǒujī.", "th": "อย่ากินข้าวไปเล่นมือถือไป" },
+                                { "zh": "她一边哭一边说。", "pinyin": "Tā yìbiān kū yìbiān shuō.", "th": "เธอร้องไห้ไปพูดไป" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 32,
+                            "structure": "快要 (kuàiyào) / 就要 (jiùyào) ... 了 (le)",
+                            "thai_logic": "ใกล้จะ ... แล้ว",
+                            "explanation": "Used to indicate that an event is about to happen very soon.",
+                            "examples": [
+                                { "zh": "快要下雨了。", "pinyin": "Kuàiyào xiàyǔ le.", "th": "ฝนใกล้จะตกแล้ว" },
+                                { "zh": "我们快要毕业了。", "pinyin": "Wǒmen kuàiyào bìyè le.", "th": "พวกเราใกล้จะเรียนจบแล้ว" },
+                                { "zh": "电影就要开始了。", "pinyin": "Diànyǐng jiùyào kāishǐ le.", "th": "หนังใกล้จะเริ่มแล้ว" },
+                                { "zh": "新年快要到了。", "pinyin": "Xīnnián kuàiyào dào le.", "th": "ปีใหม่ใกล้จะมาถึงแล้ว" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 33,
+                            "structure": "越 (yuè) ... 越 (yuè) ...",
+                            "thai_logic": "ยิ่ง ... ก็ยิ่ง ...",
+                            "explanation": "Indicates that a change in one degree causes a change in another. Perfectly mirrors the Thai 'ying... ying...'.",
+                            "examples": [
+                                { "zh": "雨越下越大。", "pinyin": "Yǔ yuè xià yuè dà.", "th": "ฝนยิ่งตกก็ยิ่งหนัก" },
+                                { "zh": "他越说越高兴。", "pinyin": "Tā yuè shuō yuè gāoxìng.", "th": "เขายิ่งพูดก็ยิ่งดีใจ" },
+                                { "zh": "中文越学越难。", "pinyin": "Zhōngwén yuè xué yuè nán.", "th": "ภาษาจีนยิ่งเรียนก็ยิ่งยาก" },
+                                { "zh": "苹果越多越好。", "pinyin": "Píngguǒ yuè duō yuè hǎo.", "th": "แอปเปิ้ลยิ่งเยอะก็ยิ่งดี" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "group_id": 6,
+                    "group_name": "Conditional & Emphatic Conjunctions",
+                    "patterns": [
+                        {
+                            "pattern_id": 34,
+                            "structure": "只要 (zhǐyào) ... 就 (jiù) ...",
+                            "thai_logic": "ขอแค่(เพียง) ... ก็(จะ) ...",
+                            "explanation": "Expresses a sufficient condition. 'As long as condition A is met, B will happen'.",
+                            "examples": [
+                                { "zh": "只要你喜欢，我就买。", "pinyin": "Zhǐyào nǐ xǐhuan, wǒ jiù mǎi.", "th": "ขอแค่คุณชอบ ฉันก็จะซื้อให้" },
+                                { "zh": "只要努力，就能成功。", "pinyin": "Zhǐyào nǔlì, jiù néng chénggōng.", "th": "ขอแค่ขยัน ก็จะสามารถประสบความสำเร็จได้" },
+                                { "zh": "只要不下雨，我们就去公园。", "pinyin": "Zhǐyào bú xiàyǔ, wǒmen jiù qù gōngyuán.", "th": "ขอแค่ฝนไม่ตก พวกเราก็จะไปสวนสาธารณะ" },
+                                { "zh": "只要有钱，就能买到。", "pinyin": "Zhǐyào yǒu qián, jiù néng mǎi dào.", "th": "ขอแค่มีเงิน ก็สามารถซื้อได้" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 35,
+                            "structure": "只有 (zhǐyǒu) ... 才 (cái) ...",
+                            "thai_logic": "ต้อง ... เท่านั้น ถึงจะ ...",
+                            "explanation": "Expresses a necessary and ONLY condition. Very distinct from '只要'.",
+                            "examples": [
+                                { "zh": "只有你，才能帮我。", "pinyin": "Zhǐyǒu nǐ, cái néng bāng wǒ.", "th": "ต้องเป็นคุณเท่านั้น ถึงจะช่วยฉันได้" },
+                                { "zh": "只有多练习，中文才能变好。", "pinyin": "Zhǐyǒu duō liànxí, Zhōngwén cái néng biàn hǎo.", "th": "ต้องฝึกฝนเยอะๆเท่านั้น ภาษาจีนถึงจะดีขึ้นได้" },
+                                { "zh": "只有周末，我才有时间。", "pinyin": "Zhǐyǒu zhōumò, wǒ cái yǒu shíjiān.", "th": "ต้องเป็นวันหยุดสุดสัปดาห์เท่านั้น ฉันถึงจะมีเวลา" },
+                                { "zh": "只有他知道这个秘密。", "pinyin": "Zhǐyǒu tā zhīdào zhège mìmì.", "th": "มีแค่เขาเท่านั้น ที่รู้ความลับนี้ (ละ 才 ไว้ได้)" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 36,
+                            "structure": "不管 / 无论 (bùguǎn / wúlùn) ... 都 (dōu) ...",
+                            "thai_logic": "ไม่ว่า(จะ) ... ก็ล้วน/ก็ยัง ...",
+                            "explanation": "Used for unconditional results. Equivalent to 'No matter...'. Must be paired with 'dōu' (all/always).",
+                            "examples": [
+                                { "zh": "不管多难，我都要学。", "pinyin": "Bùguǎn duō nán, wǒ dōu yào xué.", "th": "ไม่ว่าจะยากแค่ไหน ฉันก็ยังจะเรียน" },
+                                { "zh": "无论发生什么事，我都在你身边。", "pinyin": "Wúlùn fāshēng shénme shì, wǒ dōu zài nǐ shēnbiān.", "th": "ไม่ว่าจะเกิดเรื่องอะไรขึ้น ฉันก็ล้วนอยู่เคียงข้างคุณ" },
+                                { "zh": "不管天气怎么样，他都去跑步。", "pinyin": "Bùguǎn tiānqì zěnmeyàng, tā dōu qù pǎobù.", "th": "ไม่ว่าอากาศจะเป็นยังไง เขาก็ไปวิ่งเสมอ" },
+                                { "zh": "不管多贵，我都要买。", "pinyin": "Bùguǎn duō guì, wǒ dōu yào mǎi.", "th": "ไม่ว่าจะแพงแค่ไหน ฉันก็จะซื้อ" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 37,
+                            "structure": "即使 / 就算 (jíshǐ / jiùsuàn) ... 也 (yě) ...",
+                            "thai_logic": "ต่อให้ ... ก็(ยังคง) ...",
+                            "explanation": "Hypothetical concession. 'Even if A happens, B will still be the result'.",
+                            "examples": [
+                                { "zh": "即使下大雨，我也要去。", "pinyin": "Jíshǐ xià dà yǔ, wǒ yě yào qù.", "th": "ต่อให้ฝนตกหนัก ฉันก็จะไป" },
+                                { "zh": "就算你给我很多钱，我也不卖。", "pinyin": "Jiùsuàn nǐ gěi wǒ hěnduō qián, wǒ yě bù mài.", "th": "ต่อให้คุณให้เงินฉันเยอะมาก ฉันก็ไม่ขาย" },
+                                { "zh": "即使很累，他每天也看书。", "pinyin": "Jíshǐ hěn lèi, tā měitiān yě kànshū.", "th": "ต่อให้เหนื่อยมาก ทุกวันเขาก็ยังคงอ่านหนังสือ" },
+                                { "zh": "就算失败了，也没有关系。", "pinyin": "Jiùsuàn shībài le, yě méiyǒu guānxi.", "th": "ต่อให้ล้มเหลว ก็ไม่เป็นไร" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 38,
+                            "structure": "除了 (chúle) ... 以外 (yǐwài) , 都/还 (dōu/hái) ...",
+                            "thai_logic": "นอกจาก ... แล้ว ก็ล้วน/ยัง ...",
+                            "explanation": "Can mean 'Except for A, all do B' (uses 都) OR 'In addition to A, also B' (uses 还/也).",
+                            "examples": [
+                                { "zh": "除了他以外，我们都去了。", "pinyin": "Chúle tā yǐwài, wǒmen dōu qù le.", "th": "นอกจากเขาแล้ว พวกเราล้วนไปกันหมด (ยกเว้นเขา)" },
+                                { "zh": "除了英语以外，我还会说泰语。", "pinyin": "Chúle Yīngyǔ yǐwài, wǒ hái huì shuō Tàiyǔ.", "th": "นอกจากภาษาอังกฤษแล้ว ฉันยังพูดภาษาไทยได้ด้วย" },
+                                { "zh": "除了星期天以外，我每天都工作。", "pinyin": "Chúle xīngqītiān yǐwài, wǒ měitiān dōu gōngzuò.", "th": "นอกจากวันอาทิตย์แล้ว ฉันทำงานทุกวัน" },
+                                { "zh": "除了苹果，我还想买橘子。", "pinyin": "Chúle píngguǒ, wǒ hái xiǎng mǎi júzi.", "th": "นอกจากแอปเปิ้ล ฉันยังอยากซื้อส้มด้วย" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 39,
+                            "structure": "不是 (búshì) ... 而是 (érshì) ...",
+                            "thai_logic": "ไม่ใช่ ... แต่เป็น ...",
+                            "explanation": "Used to negate one fact and confirm another. Clarifying a misunderstanding.",
+                            "examples": [
+                                { "zh": "他不是我弟弟，而是我朋友。", "pinyin": "Tā búshì wǒ dìdi, érshì wǒ péngyou.", "th": "เขาไม่ใช่น้องชายฉัน แต่เป็นเพื่อนฉัน" },
+                                { "zh": "问题不是没钱，而是没时间。", "pinyin": "Wèntí búshì méi qián, érshì méi shíjiān.", "th": "ปัญหาไม่ใช่ไม่มีเงิน แต่เป็นไม่มีเวลา" },
+                                { "zh": "我不是不想去，而是太忙了。", "pinyin": "Wǒ búshì bù xiǎng qù, érshì tài máng le.", "th": "ฉันไม่ใช่ไม่อยากไป แต่เป็นเพราะยุ่งเกินไป" },
+                                { "zh": "这杯不是茶，而是咖啡。", "pinyin": "Zhè bēi búshì chá, érshì kāfēi.", "th": "แก้วนี้ไม่ใช่ชา แต่เป็นกาแฟ" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 40,
+                            "structure": "与其 (yǔqí) ... 不如 (bùrú) ...",
+                            "thai_logic": "แทนที่จะ ... สู้ ... ดีกว่า",
+                            "explanation": "Used to weigh two options and choose the better one. Maps perfectly to Thai logic.",
+                            "examples": [
+                                { "zh": "与其在家里睡觉，不如去运动。", "pinyin": "Yǔqí zài jiālǐ shuìjiào, bùrú qù yùndòng.", "th": "แทนที่จะนอนอยู่บ้าน สู้ไปออกกำลังกายดีกว่า" },
+                                { "zh": "与其买贵的，不如买质量好的。", "pinyin": "Yǔqí mǎi guì de, bùrú mǎi zhìliàng hǎo de.", "th": "แทนที่จะซื้อของแพง สู้ซื้อของคุณภาพดีดีกว่า" },
+                                { "zh": "与其抱怨，不如想办法解决。", "pinyin": "Yǔqí bàoyuàn, bùrú xiǎng bànfǎ jiějué.", "th": "แทนที่จะบ่น สู้หาทางแก้ปัญหาดีกว่า" },
+                                { "zh": "与其等他，不如我们先走。", "pinyin": "Yǔqí děng tā, bùrú wǒmen xiān zǒu.", "th": "แทนที่จะรอเขา สู้พวกเราไปก่อนดีกว่า" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 41,
+                            "structure": "要么 (yàome) ... 要么 (yàome) ...",
+                            "thai_logic": "ไม่ ... ก็ ... (ให้เลือกอย่างใดอย่างหนึ่ง)",
+                            "explanation": "Presents two alternatives. 'Either A or B'.",
+                            "examples": [
+                                { "zh": "你要么去，要么不去，快点决定！", "pinyin": "Nǐ yàome qù, yàome bú qù, kuàidiǎn juédìng!", "th": "คุณจะไปหรือไม่ไป รีบๆ ตัดสินใจซะ! (ไม่ไปก็ไม่ต้องไป)" },
+                                { "zh": "周末我要么看书，要么看电影。", "pinyin": "Zhōumò wǒ yàome kànshū, yàome kàn diànyǐng.", "th": "วันหยุดสุดสัปดาห์ฉันไม่อ่านหนังสือ ก็ดูหนัง" },
+                                { "zh": "我们要么打车，要么坐地铁。", "pinyin": "Wǒmen yàome dǎchē, yàome zuò dìtiě.", "th": "พวกเราไม่นั่งแท็กซี่ ก็นั่งรถไฟใต้ดิน" },
+                                { "zh": "你要么喝咖啡，要么喝茶。", "pinyin": "Nǐ yàome hē kāfēi, yàome hē chá.", "th": "คุณไม่ดื่มกาแฟ ก็ดื่มชา" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "group_id": 7,
+                    "group_name": "Special Structural Particles",
+                    "patterns": [
+                        {
+                            "pattern_id": 42,
+                            "structure": "连 (lián) ... 都/也 (dōu/yě) ...",
+                            "thai_logic": "แม้แต่ ... ก็ยัง ...",
+                            "explanation": "Used for emphasis to point out an extreme case.",
+                            "examples": [
+                                { "zh": "他太忙了，连吃饭的时间都没有。", "pinyin": "Tā tài máng le, lián chīfàn de shíjiān dōu méiyǒu.", "th": "เขายุ่งมาก แม้แต่เวลากินข้าวยังไม่มีเลย" },
+                                { "zh": "这个问题连老师也不知道。", "pinyin": "Zhège wèntí lián lǎoshī yě bù zhīdào.", "th": "ปัญหานี้แม้แต่อาจารย์ก็ยังไม่รู้" },
+                                { "zh": "昨天晚上太冷了，连小狗都感冒了。", "pinyin": "Zuótiān wǎnshang tài lěng le, lián xiǎogǒu dōu gǎnmào le.", "th": "เมื่อคืนหนาวมาก แม้แต่น้องหมาก็ยังเป็นหวัด" },
+                                { "zh": "我太累了，连话都不想说。", "pinyin": "Wǒ tài lèi le, lián huà dōu bù xiǎng shuō.", "th": "ฉันเหนื่อยมาก แม้แต่คำพูดก็ยังไม่อยากพูด" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 43,
+                            "structure": "一点儿也/都 (yìdiǎnr yě/dōu) + 不/没 (bù/méi) + [Verb/Adj]",
+                            "thai_logic": "ไม่ ... เลยแม้แต่นิดเดียว",
+                            "explanation": "Absolute negation. Means 'not at all'.",
+                            "examples": [
+                                { "zh": "我一点儿也不累。", "pinyin": "Wǒ yìdiǎnr yě bù lèi.", "th": "ฉันไม่เหนื่อยเลยแม้แต่นิดเดียว" },
+                                { "zh": "他一点儿都没变。", "pinyin": "Tā yìdiǎnr dōu méi biàn.", "th": "เขาไม่ได้เปลี่ยนไปเลยแม้แต่นิดเดียว" },
+                                { "zh": "这个菜一点儿也不辣。", "pinyin": "Zhège cài yìdiǎnr yě bú là.", "th": "กับข้าวนี้ไม่เผ็ดเลยสักนิด" },
+                                { "zh": "我一点儿都不想去。", "pinyin": "Wǒ yìdiǎnr dōu bù xiǎng qù.", "th": "ฉันไม่อยากไปเลยแม้แต่นิดเดียว" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 44,
+                            "structure": "最好 (zuìhǎo) + [Verb phrase]",
+                            "thai_logic": "ทางที่ดีควรจะ ... / ... ดีที่สุด",
+                            "explanation": "Used for giving strong advice. Literally 'best'.",
+                            "examples": [
+                                { "zh": "外面下雨了，你最好带伞。", "pinyin": "Wàimiàn xiàyǔ le, nǐ zuìhǎo dài sǎn.", "th": "ข้างนอกฝนตกแล้ว ทางที่ดีคุณควรพกร่มไปนะ" },
+                                { "zh": "你生病了，最好去医院。", "pinyin": "Nǐ shēngbìng le, zuìhǎo qù yīyuàn.", "th": "คุณป่วยแล้ว ไปโรงพยาบาลจะดีที่สุด" },
+                                { "zh": "我们最好早点出发。", "pinyin": "Wǒmen zuìhǎo zǎo diǎn chūfā.", "th": "ทางที่ดีพวกเราควรออกเดินทางให้เช้าหน่อย" },
+                                { "zh": "你最好别去惹他。", "pinyin": "Nǐ zuìhǎo bié qù rě tā.", "th": "ทางที่ดีคุณอย่าไปหาเรื่องเขาเลย" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 45,
+                            "structure": "把 (bǎ) + [Object] + [Verb] + [Result]",
+                            "thai_logic": "เอา/นำ ... มา(ทำบางอย่าง)",
+                            "explanation": "A highly advanced Chinese structure that maps incredibly well to Thai. Used when an action alters or moves an object. Maps perfectly to the Thai word 'เอา' (Ao).",
+                            "examples": [
+                                { "zh": "请把门关上。", "pinyin": "Qǐng bǎ mén guān shàng.", "th": "กรุณาเอาประตูมาปิด (กรุณาปิดประตู)" },
+                                { "zh": "我把书放在桌子上了。", "pinyin": "Wǒ bǎ shū fàng zài zhuōzi shàng le.", "th": "ฉันเอาหนังสือไปวางไว้บนโต๊ะแล้ว" },
+                                { "zh": "他把咖啡喝完了。", "pinyin": "Tā bǎ kāfēi hē wán le.", "th": "เขาเอากาแฟดื่มจนหมดแล้ว" },
+                                { "zh": "请把这份文件发给经理。", "pinyin": "Qǐng bǎ zhè fèn wénjiàn fā gěi jīnglǐ.", "th": "กรุณาเอาเอกสารฉบับนี้ส่งให้ผู้จัดการ" }
+                            ]
+                        },
+                        {
+                            "pattern_id": 46,
+                            "structure": "被 (bèi) + [Doer] + [Verb] + [Result]",
+                            "thai_logic": "ถูก/โดน (ใคร) ... (ทำบางอย่าง)",
+                            "explanation": "The Passive Voice. The subject receives the action. Maps perfectly to the Thai words 'ถูก' (took) or 'โดน' (don).",
+                            "examples": [
+                                { "zh": "我的钱包被偷了。", "pinyin": "Wǒ de qiánbāo bèi tōu le.", "th": "กระเป๋าเงินของฉันถูกขโมยไปแล้ว (ละผู้กระทำ)" },
+                                { "zh": "老鼠被猫吃了。", "pinyin": "Lǎoshǔ bèi māo chī le.", "th": "หนูโดนแมวกินไปแล้ว" },
+                                { "zh": "他被老板骂了。", "pinyin": "Tā bèi lǎobǎn mà le.", "th": "เขาถูกเจ้านายด่า" },
+                                { "zh": "电脑被弟弟弄坏了。", "pinyin": "Diànnǎo bèi dìdi nòng huài le.", "th": "คอมพิวเตอร์โดนน้องชายทำพังแล้ว" }
+                            ]
+                        }
+                    ]
                 }
             ]
+
         };
         const lessons = [
             {
