@@ -2035,7 +2035,7 @@
                 grammar: [{ title: "Greetings", body: "Standard greeting: Nǐ hǎo. Polite: Nín hǎo. Plural: Nǐmen hǎo." }, { title: "Polite Request", body: "Use Qǐng (Please) + Verb." }]
             },
             {
-                id: 2, titleCh: "你好吗", titleEn: "How are you", titleTh: "คุณสบายดีไหม",
+                id: 2, titleCh: "你好吗 & 时间", titleEn: "How are you & Time", titleTh: "คุณสบายดีไหม & เวลา",
                 words: [
                     { ch: "吗", py: "ma", en: "a particle used at the end of a question", th: "ไหม" },
                     { ch: "我", py: "wǒ", en: "I, me", th: "ฉัน/ผม" },
@@ -2056,43 +2056,66 @@
                     { ch: "忙", py: "máng", en: "busy", th: "ยุ่ง" },
                     { ch: "累", py: "lèi", en: "tired", th: "เหนื่อย" },
                     { ch: "饿", py: "è", en: "hungry", th: "หิว" },
-                    { ch: "渴", py: "kě", en: "thirsty", th: "หิวน้ำ/กระหายน้ำ" }
+                    { ch: "渴", py: "kě", en: "thirsty", th: "หิวน้ำ/กระหายน้ำ" },
+                    { ch: "今天", py: "jīntiān", en: "today", th: "วันนี้" },
+                    { ch: "明天", py: "míngtiān", en: "tomorrow", th: "พรุ่งนี้" },
+                    { ch: "昨天", py: "zuótiān", en: "yesterday", th: "เมื่อวาน" },
+                    { ch: "早上", py: "zǎoshang", en: "morning (5:00-11:59)", th: "เช้า (5:00-11:59)" },
+                    { ch: "上午", py: "shàngwǔ", en: "morning (8:00-11:59)", th: "สาย (8:00-11:59)" },
+                    { ch: "中午", py: "zhōngwǔ", en: "noon (12:00-12:59)", th: "เที่ยง (12:00-12:59)" },
+                    { ch: "下午", py: "xiàwǔ", en: "afternoon (13:00-17:59)", th: "บ่าย (13:00-17:59)" },
+                    { ch: "晚上", py: "wǎnshang", en: "evening (18:00-23:59)", th: "เย็น/ค่ำ (18:00-23:59)" },
+                    { ch: "夜里", py: "yèli", en: "night (24:00-24:59)", th: "กลางคืน (24:00-24:59)" },
+                    { ch: "凌晨", py: "língchén", en: "early morning (01:00-04:59)", th: "รุ่งสาง (01:00-04:59)" },
+                    { ch: "点", py: "diǎn", en: "o'clock", th: "โมง/นาฬิกา" },
+                    { ch: "分钟", py: "fēnzhōng", en: "minute", th: "นาที" },
+                    { ch: "半", py: "bàn", en: "half", th: "ครึ่ง" },
+                    { ch: "起床", py: "qǐ chuáng", en: "to get up", th: "ตื่นนอน" },
+                    { ch: "洗澡", py: "xǐ zǎo", en: "to take a bath/shower", th: "อาบน้ำ" },
+                    { ch: "早饭", py: "zǎofàn", en: "breakfast", th: "มื้อเช้า" },
+                    { ch: "午饭", py: "wǔfàn", en: "lunch", th: "มื้อเที่ยง" },
+                    { ch: "晚饭", py: "wǎnfàn", en: "dinner", th: "มื้อเย็น" },
+                    { ch: "上课", py: "shàng kè", en: "to go to class", th: "เข้าเรียน" },
+                    { ch: "下课", py: "xià kè", en: "to finish class", th: "เลิกเรียน" },
+                    { ch: "上班", py: "shàng bān", en: "to go to work", th: "เข้างาน" },
+                    { ch: "下班", py: "xià bān", en: "to finish work", th: "เลิกงาน" },
+                    { ch: "睡觉", py: "shuì jiào", en: "to sleep", th: "นอนหลับ" }
                 ],
                 sentences: [
                     { ch: "你好吗？", py: "Nǐ hǎo ma?", en: "How are you?", th: "คุณสบายดีไหม?" },
                     { ch: "我很好。", py: "Wǒ hěn hǎo.", en: "I'm very good.", th: "ฉันสบายดีมาก" },
-                    { ch: "你忙吗？", py: "Nǐ máng ma?", en: "Are you busy?", th: "คุณยุ่งไหม?" },
-                    { ch: "我不忙。", py: "Wǒ bù máng.", en: "I'm not busy.", th: "ฉันไม่ยุ่ง" },
-                    { ch: "你累吗？", py: "Nǐ lèi ma?", en: "Are you tired?", th: "คุณเหนื่อยไหม?" },
-                    { ch: "我很累。", py: "Wǒ hěn lèi.", en: "I'm very tired.", th: "ฉันเหนื่อยมาก" },
-                    { ch: "你饿吗？", py: "Nǐ è ma?", en: "Are you hungry?", th: "คุณหิวไหม?" },
-                    { ch: "我不饿。", py: "Wǒ bú è.", en: "I'm not hungry.", th: "ฉันไม่หิว" },
-                    { ch: "你渴吗？", py: "Nǐ kě ma?", en: "Are you thirsty?", th: "คุณหิวน้ำไหม?" },
-                    { ch: "我很渴。", py: "Wǒ hěn kě.", en: "I'm very thirsty.", th: "ฉันหิวน้ำมาก" },
-                    { ch: "你爸爸好吗？", py: "Nǐ bàba hǎo ma?", en: "How is your dad?", th: "พ่อคุณสบายดีไหม?" },
-                    { ch: "他们都很好。", py: "Tāmen dōu hěn hǎo.", en: "They are all good.", th: "พวกเขาสบายดีทุกคน" }
+                    { ch: "你今天几点起床？", py: "Nǐ jīntiān jǐ diǎn qǐchuáng?", en: "What time do you get up today?", th: "วันนี้คุณตื่นนอนกี่โมง?" },
+                    { ch: "我早上八点半起床。", py: "Wǒ zǎoshang bā diǎn bàn qǐchuáng.", en: "I get up at 8:30 in the morning.", th: "ฉันตื่นนอนตอนแปดโมงครึ่งตอนเช้า" },
+                    { ch: "他们晚上十一点睡觉。", py: "Tāmen wǎnshang shíyī diǎn shuìjiào.", en: "They go to sleep at 11 PM.", th: "พวกเขาเข้านอนตอนห้าทุ่ม" },
+                    { ch: "你什么时候吃午饭？", py: "Nǐ shénme shíhou chī wǔfàn?", en: "When do you eat lunch?", th: "คุณกินมื้อเที่ยงเมื่อไหร่?" },
+                    { ch: "我中午十二点半吃午饭。", py: "Wǒ zhōngwǔ shí'èr diǎn bàn chī wǔfàn.", en: "I eat lunch at 12:30 PM.", th: "ฉันกินมื้อเที่ยงตอนเที่ยงครึ่ง" },
+                    { ch: "爸爸和妈妈六点下班。", py: "Bàba hé māma liù diǎn xiàbān.", en: "Mom and dad finish work at 6 o'clock.", th: "พ่อกับแม่เลิกงานตอนหกโมง" }
                 ],
                 practice: [
-                    { ch: "你好吗？我很好。", py: "Nǐ hǎo ma? Wǒ hěn hǎo.", en: "How are you? I'm good.", th: "คุณสบายดีไหม ฉันสบายดี" },
-                    { ch: "你忙吗？我很忙。", py: "Nǐ máng ma? Wǒ hěn máng.", en: "Are you busy? I'm very busy.", th: "คุณยุ่งไหม ฉันยุ่งมาก" },
-                    { ch: "爸爸妈妈好吗？", py: "Bàba māma hǎo ma?", en: "How are mom and dad?", th: "พ่อกับแม่สบายดีไหม" },
-                    { ch: "他们都很好。", py: "Tāmen dōu hěn hǎo.", en: "They are all well.", th: "พวกเขาสบายดีทุกคน" },
-                    { ch: "你哥哥累吗？", py: "Nǐ gēge lèi ma?", en: "Is your brother tired?", th: "พี่ชายคุณเหนื่อยไหม" },
-                    { ch: "他不累，他很饿。", py: "Tā bú lèi, tā hěn è.", en: "He's not tired, he's hungry.", th: "เขาไม่เหนื่อย เขาหิวมาก" },
-                    { ch: "我也很饿。", py: "Wǒ yě hěn è.", en: "I'm also very hungry.", th: "ฉันก็หิวมากเหมือนกัน" },
-                    { ch: "你不渴吗？", py: "Nǐ bù kě ma?", en: "Aren't you thirsty?", th: "คุณไม่หิวน้ำเหรอ" },
-                    { ch: "我不渴，谢谢。", py: "Wǒ bù kě, xièxie.", en: "I'm not thirsty, thanks.", th: "ฉันไม่หิวน้ำ ขอบคุณ" },
-                    { ch: "老师忙吗？", py: "Lǎoshī máng ma?", en: "Is the teacher busy?", th: "ครูยุ่งไหม" },
-                    { ch: "老师很忙，也很累。", py: "Lǎoshī hěn máng, yě hěn lèi.", en: "Teacher is busy and tired.", th: "ครูยุ่งมาก และก็เหนื่อยมาก" }
+                    { ch: "你明天几点上课？", py: "Nǐ míngtiān jǐ diǎn shàngkè?", en: "What time do you have class tomorrow?", th: "พรุ่งนี้คุณมีเรียนกี่โมง?" },
+                    { ch: "我上午八点半上课。", py: "Wǒ shàngwǔ bā diǎn bàn shàngkè.", en: "I have class at 8:30 AM.", th: "ฉันมีเรียนตอนแปดโมงครึ่งตอนเช้า" },
+                    { ch: "你几点洗澡？", py: "Nǐ jǐ diǎn xǐzǎo?", en: "What time do you take a bath?", th: "คุณอาบน้ำกี่โมง?" },
+                    { ch: "我晚上七点半洗澡。", py: "Wǒ wǎnshang qī diǎn bàn xǐzǎo.", en: "I take a bath at 7:30 PM.", th: "ฉันอาบน้ำตอนทุ่มครึ่ง" },
+                    { ch: "昨天你几点睡觉？", py: "Zuótiān nǐ jǐ diǎn shuìjiào?", en: "What time did you go to sleep yesterday?", th: "เมื่อวานคุณนอนกี่โมง?" },
+                    { ch: "昨晚我十二点睡觉。", py: "Zuówǎn wǒ shí'èr diǎn shuìjiào.", en: "I went to sleep at 12 last night.", th: "เมื่อคืนฉันนอนตอนเที่ยงคืน" },
+                    { ch: "你忙吗？我今天很忙。", py: "Nǐ máng ma? Wǒ jīntiān hěn máng.", en: "Are you busy? I am very busy today.", th: "คุณยุ่งไหม วันนี้ฉันยุ่งมาก" },
+                    { ch: "哥哥和弟弟都上班吗？", py: "Gēge hé dìdi dōu shàngbān ma?", en: "Do elder brother and younger brother both work?", th: "พี่ชายและน้องชายทำงานทั้งคู่ไหม?" },
+                    { ch: "他们上午八点上班，下午五点下班。", py: "Tāmen shàngwǔ bā diǎn shàngbān, xiàwǔ wǔ diǎn xiàbān.", en: "They start work at 8 AM and finish at 5 PM.", th: "พวกเขาเข้างานแปดโมงเช้า เลิกงานห้าโมงเย็น" },
+                    { ch: "你饿吗？我们去吃晚饭吧。", py: "Nǐ è ma? Wǒmen qù chī wǎnfàn ba.", en: "Are you hungry? Let's go eat dinner.", th: "คุณหิวไหม พวกเราไปกินมื้อเย็นกันเถอะ" }
                 ],
                 dialogues: [
-                    { role: "A", text: "你好吗？", trans: "คุณสบายดีไหม?", transEn: "How are you?" },
-                    { role: "B", text: "我很好。你呢？", trans: "ฉันสบายดี แล้วคุณล่ะ?", transEn: "I'm good. And you?" },
-                    { role: "A", text: "我也很饿。你爸爸妈妈好吗？", trans: "ฉันก็หิวเหมือนกัน พ่อแม่คุณสบายดีไหม?", transEn: "I'm also hungry. How are your parents?" },
-                    { role: "B", text: "他们都很好。你哥哥忙吗？", trans: "พวกเขาสบายดีทุกคน พี่ชายคุณหยุ่งไหม?", transEn: "They are all good. Is your brother busy?" },
-                    { role: "A", text: "他很忙，也很累。", trans: "เขายุ่งมาก แล้วก็เหนื่อยด้วย", transEn: "He is busy and tired." }
+                    { role: "A", text: "你今天几点起床？", trans: "วันนี้คุณตื่นนอนกี่โมง?", transEn: "What time do you get up today?" },
+                    { role: "B", text: "我早上八点起床。你呢？", trans: "ฉันตื่นนอนตอนแปดโมงเช้า แล้วคุณล่ะ?", transEn: "I get up at 8 AM. And you?" },
+                    { role: "A", text: "我七点半起床。你今天忙吗？", trans: "ฉันตื่นนอนตอนเจ็ดโมงครึ่ง วันนี้คุณยุ่งไหม?", transEn: "I get up at 7:30. Are you busy today?" },
+                    { role: "B", text: "今天我很忙。我上午九点上课，下午五点下班。", trans: "วันนี้ฉันยุ่งมาก เช้าเก้าโมงเข้าเรียน บ่ายห้าโมงเลิกงาน", transEn: "Today I'm very busy. I have class at 9 AM, and finish work at 5 PM." },
+                    { role: "A", text: "那你几点吃晚饭？", trans: "ถ้าอย่างนั้นคุณกินมื้อเย็นกี่โมง?", transEn: "Then what time do you eat dinner?" },
+                    { role: "B", text: "我晚上七点半吃晚饭，十点半睡觉。", trans: "ฉันกินมื้อเย็นตอนทุ่มครึ่ง และเข้านอนตอนสี่ทุ่มครึ่ง", transEn: "I eat dinner at 7:30 PM, and go to sleep at 10:30 PM." }
                 ],
-                grammar: [{ title: "Questions with 吗", body: "Statement + ma = Yes/No Question." }, { title: "Adverbs", body: "Hěn (very) is often used as a linking verb for adjectives." }]
+                grammar: [
+                    { title: "Time Structure", body: "S + Time + V  or  Time + S + V. Example: 我早上八点起床 (I get up at 8 AM)." },
+                    { title: "Time Period Sequence", body: "Large to Small: Period (早上) + Time (八点) + Minutes (十分)." },
+                    { title: "Asking 'What time'", body: "Use 几点 (jǐ diǎn). Example: 你几点起床？" }
+                ]
             },
             {
                 id: 3, titleCh: "你吃什么", titleEn: "What to eat", titleTh: "คุณกินอะไร",
