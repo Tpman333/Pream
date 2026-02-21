@@ -23,6 +23,7 @@
             --accent-glow: rgba(0, 191, 165, 0.4);
 
             --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            --bg: #16213e;
             --glass-bg: rgba(30, 30, 40, 0.6);
             --glass-border: rgba(255, 255, 255, 0.12);
             --glass-blur: blur(16px);
@@ -56,6 +57,7 @@
             --primary: #FF3D00;
             --primary-dark: #DD2C00;
             --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --bg: #f5f7fa;
             --glass-bg: rgba(255, 255, 255, 0.7);
             --glass-border: rgba(255, 255, 255, 0.5);
             --text: #2c3e50;
@@ -1205,8 +1207,10 @@
                         style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px;">
                         Total XP</div>
                 </div>
-                <div class="glass-panel"
-                    style="padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+                <div class="glass-panel" onclick="showLearnedWords()"
+                    style="padding: 15px; text-align: center; display: flex; flex-direction: column; align-items: center; cursor: pointer; transition: transform 0.2s;"
+                    onmousedown="this.style.transform='scale(0.95)'" onmouseup="this.style.transform='scale(1)'"
+                    onmouseleave="this.style.transform='scale(1)'">
                     <span style="font-size: 1.8rem; margin-bottom: 5px;">📚</span>
                     <div id="dash-words" style="font-weight: 800; font-size: 1.1rem; color: var(--text);">0</div>
                     <div
@@ -1519,6 +1523,21 @@
                 style="background:var(--card-bg); color:var(--text); border:none; border-radius:8px; padding:0 15px;">✕</button>
         </div>
         <div id="search-results"></div>
+    </div>
+
+    <!-- LEARNED WORDS OVERLAY -->
+    <div id="learned-words-overlay" class="hidden"
+        style="position:fixed; top:0; left:0; width:100%; height:100%; background:var(--bg); z-index:9999; padding:20px; box-sizing:border-box; overflow-y:auto; transition: opacity 0.3s ease;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+            <h2 style="margin:0;">Learned Words</h2>
+            <button onclick="document.getElementById('learned-words-overlay').classList.add('hidden')"
+                style="background:var(--card-bg); color:var(--text); border:none; border-radius:8px; padding:10px 15px; font-weight:bold; cursor:pointer;">✕
+                Close</button>
+        </div>
+        <div id="learned-words-results"
+            style="display:grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap:10px;">
+            <!-- Rendered via JS -->
+        </div>
     </div>
 
     <!-- SETTINGS -->
@@ -6188,6 +6207,52 @@
         // --- UTILS ---
         function toggleSettings() { document.getElementById('settings-overlay').classList.toggle('hidden'); }
         function toggleSearch() { document.getElementById('search-overlay').classList.toggle('hidden'); }
+
+        function showLearnedWords() {
+            const resDiv = document.getElementById('learned-words-results');
+            resDiv.innerHTML = '';
+
+            const hits = [];
+
+            // 1. Get lesson mastered words (lvl >= 3)
+            lessons.forEach((l) => {
+                l.words.forEach((w, idx) => {
+                    const key = `${l.id}-${idx}`;
+                    if (state.srs[key] && state.srs[key].lvl >= 3) {
+                        hits.push(w);
+                    }
+                });
+            });
+
+            // 2. Get common mastered words
+            if (typeof commonWordsData !== 'undefined') {
+                commonWordsData.forEach(group => {
+                    group.words.forEach(w => {
+                        if (state.commonWordsProgress && state.commonWordsProgress[w.ch]) {
+                            // Avoid duplicates if it's already in the lesson words
+                            if (!hits.find(existing => existing.ch === w.ch)) {
+                                hits.push(w);
+                            }
+                        }
+                    });
+                });
+            }
+
+            if (hits.length === 0) {
+                resDiv.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-secondary); font-size:1.1rem;">You haven't learned any words yet.<br>Start practicing flashcards or the 1000 common words list!</div>`;
+            } else {
+                resDiv.innerHTML = hits.map(w => {
+                    return `<div class="word-card animate-up" style="background:var(--card-bg); border:1px solid var(--primary); border-radius:12px; padding:15px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.05); position:relative; cursor:pointer;" onclick="speak('${w.ch.replace(/'/g, "\\'")}')">
+                                <div style="font-size:2rem; font-family:'KaiTi', serif; color:var(--primary); margin-bottom:5px;">${w.ch}</div>
+                                <div style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:5px;">${w.py}</div>
+                                <div style="font-size:0.85rem; font-weight:bold; color:var(--text); margin-bottom:3px;">${w.en}</div>
+                                <div style="font-size:0.75rem; color:var(--text-secondary);">${w.th}</div>
+                            </div>`
+                }).join('');
+            }
+
+            document.getElementById('learned-words-overlay').classList.remove('hidden');
+        }
 
         function handleSearch() {
             const val = document.getElementById('search-input').value.toLowerCase();
