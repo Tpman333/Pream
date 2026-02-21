@@ -14,55 +14,163 @@
         rel="stylesheet">
     <style>
         :root {
-            /* Premium Color Palette */
-            --primary: #FF5252;
-            /* Coral Red */
-            --primary-dark: #D50000;
-            --accent: #00BFA5;
-            /* Deep Teal - for progress/success */
-            --accent-glow: rgba(0, 191, 165, 0.4);
+            /* Premium Color Palette Based on Network Illustration */
+            --primary: #F26A38;
+            /* Vibrant Orange */
+            --primary-dark: #D84C1C;
+            --accent: #F8BC24;
+            /* Golden Yellow */
+            --accent-glow: rgba(248, 188, 36, 0.4);
 
-            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            --bg: #16213e;
-            --glass-bg: rgba(30, 30, 40, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.12);
+            --bg-gradient: linear-gradient(135deg, #0A4F70 0%, #0C3B5E 50%, #082942 100%);
+            --bg: #0C3B5E;
+            --glass-bg: rgba(42, 165, 184, 0.15);
+            --glass-border: rgba(88, 194, 209, 0.2);
             --glass-blur: blur(16px);
 
             --text: #ffffff;
-            --text-secondary: #b0b0b0;
+            --text-secondary: #BEE3EA;
 
-            --success: #4caf50;
-            --warning: #ff9800;
-            --danger: #f44336;
+            --success: #67C8A4;
+            --warning: #F8BC24;
+            --danger: #F26A38;
 
-            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
             --radius: 20px;
             --font-main: 'Nunito', sans-serif;
             --font-body: 'Inter', sans-serif;
 
             /* Tone Colors (Brighter for dark mode) */
-            --t1: #FF8A80;
-            /* Light Red */
-            --t2: #A5D6A7;
-            /* Light Green */
-            --t3: #90CAF9;
-            /* Light Blue */
-            --t4: #CE93D8;
-            /* Light Purple */
-            --t5: #E0E0E0;
-            /* Light Grey */
+            --t1: #F8BC24;
+            /* Yellow */
+            --t2: #E0F4E8;
+            /* Mint */
+            --t3: #58C2D1;
+            /* Light Teal */
+            --t4: #F26A38;
+            /* Orange */
+            --t5: #CBEFDE;
+            /* Light Greenish Blue */
         }
 
         [data-theme="light"] {
-            --primary: #FF3D00;
-            --primary-dark: #DD2C00;
-            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --bg: #f5f7fa;
+            --primary: #EF8A3C;
+            --primary-dark: #D84C1C;
+            --bg-gradient: linear-gradient(135deg, #E0F4E8 0%, #c1ebd5 100%);
+            --bg: #E0F4E8;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(42, 165, 184, 0.3);
+            --text: #0C3B5E;
+            --text-secondary: #1B819E;
+            --shadow: 0 8px 32px 0 rgba(10, 79, 112, 0.15);
+        }
+
+        [data-theme="nature-dark"] {
+            --primary: #E2903F;
+            --primary-dark: #C2701F;
+            --accent: #17A554;
+            --accent-glow: rgba(23, 165, 84, 0.4);
+
+            --bg-gradient: linear-gradient(135deg, #432A5B 0%, #2A1A3A 100%);
+            --bg: #2A1A3A;
+            --glass-bg: rgba(12, 139, 136, 0.2);
+            --glass-border: rgba(12, 139, 136, 0.3);
+
+            --text: #ffffff;
+            --text-secondary: #C8E3E1;
+
+            --success: #17A554;
+            --warning: #E2903F;
+            --danger: #cf4f4f;
+
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+
+            --t1: #E2903F;
+            --t2: #17A554;
+            --t3: #0C8B88;
+            --t4: #a078b5;
+            --t5: #CBEFDE;
+        }
+
+        [data-theme="nature-light"] {
+            --primary: #E2903F;
+            --primary-dark: #C2701F;
+            --accent: #17A554;
+            --accent-glow: rgba(23, 165, 84, 0.4);
+
+            --bg-gradient: linear-gradient(135deg, #F0F7F2 0%, #D8EBDC 100%);
+            --bg: #F0F7F2;
             --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --text: #2c3e50;
-            --text-secondary: #546e7a;
-            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --glass-border: rgba(12, 139, 136, 0.3);
+
+            --text: #2A1A3A;
+            --text-secondary: #0C8B88;
+
+            --success: #17A554;
+            --warning: #E2903F;
+            --danger: #cf4f4f;
+
+            --shadow: 0 8px 32px 0 rgba(12, 139, 136, 0.15);
+
+            --t1: #E2903F;
+            --t2: #17A554;
+            --t3: #0C8B88;
+            --t4: #432A5B;
+            --t5: #8c9795;
+        }
+
+        [data-theme="seven-moves-dark"] {
+            --primary: #F08C1D;
+            --primary-dark: #D07010;
+            --accent: #527FA4;
+            --accent-glow: rgba(82, 127, 164, 0.4);
+
+            --bg-gradient: linear-gradient(135deg, #2D253A 0%, #1A2620 100%);
+            --bg: #1A2620;
+            --glass-bg: rgba(82, 127, 164, 0.2);
+            --glass-border: rgba(82, 127, 164, 0.3);
+
+            --text: #ffffff;
+            --text-secondary: #A5CAE4;
+
+            --success: #439A5B;
+            --warning: #B1AB55;
+            --danger: #C17A43;
+
+            --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+
+            --t1: #F08C1D;
+            --t2: #527FA4;
+            --t3: #439A5B;
+            --t4: #624E79;
+            --t5: #B1AB55;
+        }
+
+        [data-theme="seven-moves-light"] {
+            --primary: #F08C1D;
+            --primary-dark: #D07010;
+            --accent: #527FA4;
+            --accent-glow: rgba(82, 127, 164, 0.4);
+
+            --bg-gradient: linear-gradient(135deg, #F9F7FA 0%, #F5F9F6 100%);
+            --bg: #F9F7FA;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(82, 127, 164, 0.3);
+
+            --text: #2D253A;
+            --text-secondary: #527FA4;
+
+            --success: #439A5B;
+            --warning: #B1AB55;
+            --danger: #C17A43;
+
+            --shadow: 0 8px 32px 0 rgba(82, 127, 164, 0.15);
+
+            --t1: #F08C1D;
+            --t2: #527FA4;
+            --t3: #439A5B;
+            --t4: #624E79;
+            --t5: #B1AB55;
         }
 
         * {
@@ -1554,6 +1662,17 @@
                     onchange="toggleLang()">
                     <option value="th">ไทย (Thai) - Default</option>
                     <option value="en">English</option>
+                </select>
+            </label>
+
+            <label style="display:block; margin:20px 0;">
+                <div style="margin-bottom:8px; font-weight:bold">Theme</div>
+                <select id="set-theme"
+                    style="width:100%; padding:12px; border-radius:10px; border:1px solid #555; background:var(--bg); color:var(--text)"
+                    onchange="updateTheme()">
+                    <option value="network">Network (Default)</option>
+                    <option value="nature">Brain Growth (Nature)</option>
+                    <option value="seven-moves">Seven Learning Moves</option>
                 </select>
             </label>
 
@@ -5270,7 +5389,7 @@
             mistakes: [],
             srs: {},
             commonWordsProgress: {},
-            settings: { dark: true, blur: false, speed: 1.0, voiceURI: '', lang: 'th' }
+            settings: { dark: true, blur: false, speed: 1.0, voiceURI: '', lang: 'th', theme: 'network' }
         };
         let currentLesson = null;
         let quizPool = [];
@@ -5362,7 +5481,7 @@
             const saved = localStorage.getItem('activeChineseState');
             if (saved) {
                 const parsed = JSON.parse(saved);
-                const defaultSettings = { dark: true, blur: false, speed: 1.0, voiceURI: '', lang: 'th' };
+                const defaultSettings = { dark: true, blur: false, speed: 1.0, voiceURI: '', lang: 'th', theme: 'network' };
 
                 state.stats = parsed.stats || state.stats;
                 state.mistakes = parsed.mistakes || state.mistakes;
@@ -5410,7 +5529,13 @@
         }
 
         function applySettings() {
-            document.body.setAttribute('data-theme', state.settings.dark ? 'dark' : 'light');
+            const t = state.settings.theme || 'network';
+            let themeVal = '';
+            if (t === 'network') themeVal = state.settings.dark ? '' : 'light';
+            else themeVal = state.settings.dark ? `${t}-dark` : `${t}-light`;
+
+            document.body.setAttribute('data-theme', themeVal);
+            if (document.getElementById('set-theme')) document.getElementById('set-theme').value = t;
             if (document.getElementById('set-dark')) document.getElementById('set-dark').checked = state.settings.dark;
             if (document.getElementById('set-blur')) document.getElementById('set-blur').checked = state.settings.blur;
             if (document.getElementById('set-speed')) document.getElementById('set-speed').value = state.settings.speed;
@@ -5795,9 +5920,12 @@
             const isThai = state.settings.lang === 'th';
             cont.innerHTML = currentLesson.sentences.map(s => {
                 const safeCh = s.ch.replace(/'/g, "\\'");
-                return `<div class="section-block">
-            <button class="play-sent-btn" onclick="speak('${safeCh}')">🔊</button>
-            <div class="sent-ch" onclick="speak('${safeCh}')">${s.ch}</div>
+                return `<div class="section-block" style="cursor:pointer; transition:transform 0.2s;" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'" onclick="speak('${safeCh}')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <button class="play-sent-btn" onclick="event.stopPropagation(); speak('${safeCh}')">🔊</button>
+                <button class="play-sent-btn" style="background:#f44336;" onclick="event.stopPropagation(); checkPronunciation('${safeCh}', this)">🎤</button>
+            </div>
+            <div class="sent-ch">${s.ch}</div>
             <div class="sent-py">${s.py}</div>
             ${isThai ? `<div class="sent-th">${s.th}</div>` : ''}
             <div class="sent-en">${s.en}</div>
@@ -5819,10 +5947,13 @@
             html += dialogs.map(line => {
                 const safeCh = line.text.replace(/'/g, "\\'");
                 const isMe = line.role === 'B';
-                return `<div class="dialogue-row ${isMe ? 'me' : ''}" onclick="speak('${safeCh}')">
+                return `<div class="dialogue-row ${isMe ? 'me' : ''}" style="cursor:pointer; transition:transform 0.2s;" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'" onclick="speak('${safeCh}')">
             <div class="avatar">${line.role}</div>
             <div class="bubble">
-                <div style="font-size:1.1rem; font-weight:bold; margin-bottom:4px">${line.text}</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px">
+                    <div style="font-size:1.1rem; font-weight:bold;">${line.text}</div>
+                    <button class="play-sent-btn" style="background:#f44336; font-size:1rem; width:30px; height:30px; margin-bottom:0;" onclick="event.stopPropagation(); checkPronunciation('${safeCh}', this)">🎤</button>
+                </div>
                 <div style="font-size:0.9rem; opacity:0.9">${isThai ? line.trans : line.transEn}</div>
             </div>
         </div>`;
@@ -5839,9 +5970,12 @@
             if (currentLesson.practice && currentLesson.practice.length > 0) {
                 cont.innerHTML = currentLesson.practice.map(s => {
                     const safeCh = s.ch.replace(/'/g, "\\'");
-                    return `<div class="section-block">
-                        <button class="play-sent-btn" onclick="speak('${safeCh}')">🔊</button>
-                        <div class="sent-ch" onclick="speak('${safeCh}')">${s.ch}</div>
+                    return `<div class="section-block" style="cursor:pointer; transition:transform 0.2s;" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'" onclick="speak('${safeCh}')">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <button class="play-sent-btn" onclick="event.stopPropagation(); speak('${safeCh}')">🔊</button>
+                            <button class="play-sent-btn" style="background:#f44336;" onclick="event.stopPropagation(); checkPronunciation('${safeCh}', this)">🎤</button>
+                        </div>
+                        <div class="sent-ch">${s.ch}</div>
                         <div class="sent-py">${s.py}</div>
                         <div class="sent-th">${s.th}</div>
                         <div class="sent-en">${s.en}</div>
@@ -5883,9 +6017,12 @@
 
             cont.innerHTML = generated.map(s => {
                 const safeCh = s.ch.replace(/'/g, "\\'");
-                return `<div class="section-block">
-            <button class="play-sent-btn" onclick="speak('${safeCh}')">🔊</button>
-            <div class="sent-ch" onclick="speak('${safeCh}')">${s.ch}</div>
+                return `<div class="section-block" style="cursor:pointer; transition:transform 0.2s;" onmousedown="this.style.transform='scale(0.98)'" onmouseup="this.style.transform='scale(1)'" onmouseleave="this.style.transform='scale(1)'" onclick="speak('${safeCh}')">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <button class="play-sent-btn" onclick="event.stopPropagation(); speak('${safeCh}')">🔊</button>
+                <button class="play-sent-btn" style="background:#f44336;" onclick="event.stopPropagation(); checkPronunciation('${safeCh}', this)">🎤</button>
+            </div>
+            <div class="sent-ch">${s.ch}</div>
             <div class="sent-py">${s.py}</div>
             <div class="sent-th">${s.th}</div>
             <div class="sent-en">${s.en}</div>
@@ -6279,6 +6416,7 @@
         }
 
         function toggleDark() { state.settings.dark = !state.settings.dark; applySettings(); saveState(); }
+        function updateTheme() { state.settings.theme = document.getElementById('set-theme').value; applySettings(); saveState(); }
         function toggleBlur() { state.settings.blur = !state.settings.blur; applySettings(); saveState(); }
         function updateSpeed() { state.settings.speed = document.getElementById('set-speed').value; document.getElementById('speed-val').innerText = state.settings.speed; saveState(); }
         function toggleLang() {
@@ -6962,6 +7100,51 @@
                 btn.innerText = originalText;
                 btn.style.background = "var(--card-bg)";
                 btn.style.color = "var(--text)";
+            }
+        }
+
+        function checkPronunciation(targetText, btnElement) {
+            if (!('webkitSpeechRecognition' in window)) {
+                alert("Speech Recognition not supported in this browser. Try Chrome.");
+                return;
+            }
+            const recognition = new webkitSpeechRecognition();
+            recognition.lang = 'zh-CN';
+            recognition.start();
+
+            const originalHTML = btnElement.innerHTML;
+            btnElement.innerHTML = "👂";
+            btnElement.style.background = "#d32f2f";
+
+            // Simplify target by stripping punctuation
+            const cleanTarget = targetText.replace(/[。？！，、；：“”‘’（）《》〈〉]/g, '').trim();
+
+            recognition.onresult = function (event) {
+                const transcript = event.results[0][0].transcript;
+                const cleanTranscript = transcript.replace(/[。？！，、；：“”‘’（）《》〈〉]/g, '').trim();
+
+                // Compare (fuzzy matching could be better, but we do exact substring or reverse substring)
+                if (cleanTranscript.includes(cleanTarget) || cleanTarget.includes(cleanTranscript)) {
+                    alert(`✅ Excellent!\nYou said: ${transcript}`);
+                    awardXP(5);
+                } else if (cleanTranscript.length > 0) {
+                    alert(`❌ Not quite!\nYou said: ${transcript}\nTarget: ${targetText}`);
+                }
+                resetBtn();
+            };
+
+            recognition.onerror = function (event) {
+                alert("Error: " + event.error);
+                resetBtn();
+            };
+
+            recognition.onend = function () {
+                resetBtn();
+            };
+
+            function resetBtn() {
+                btnElement.innerHTML = originalHTML;
+                btnElement.style.background = "#f44336";
             }
         }
 
